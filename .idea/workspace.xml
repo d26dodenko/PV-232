@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0cae944a-2a12-40ab-870d-0ef2572bd035" name="Изменения" comment="Refactoring" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;artemsmolyakov29-lgtm&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/d26dodenko/PV-232.git&quot;,
+    &quot;accountId&quot;: &quot;d8a44ccf-05ad-4a4a-bbbd-f458312c2ce7&quot;
+  }
+}</component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.000013470578028" />
+      <entry key="MS500" value="1.1235463900561904" />
+      <entry key="S2" value="1.9819868563557788" />
+      <entry key="S5" value="3.3080201876780353" />
+      <entry key="S10" value="4.945841510479209" />
+      <entry key="S30" value="7.209945551257332" />
+      <entry key="S60" value="8.034452424723355" />
+      <entry key="M2" value="8.530436618722431" />
+      <entry key="M5" value="10.25817420375118" />
+      <entry key="M10" value="16.10499856307588" />
+      <entry key="M15" value="21.476290928825584" />
+      <entry key="M30" value="30.996847811258554" />
+      <entry key="H1" value="38.267737827053" />
+      <entry key="H2" value="42.778849655716996" />
+      <entry key="H4" value="45.293941608429115" />
+      <entry key="D1" value="47.53511531683363" />
+      <entry key="W1" value="47.93323980701054" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="1.3719577952461456E-254" />
+      <entry key="S5" value="2.8506001302669998E-102" />
+      <entry key="S10" value="1.688372035502542E-51" />
+      <entry key="S30" value="1.1907558307089749E-17" />
+      <entry key="S60" value="3.450733010113903E-9" />
+      <entry key="M2" value="5.874294008741729E-5" />
+      <entry key="M5" value="0.020304031179980166" />
+      <entry key="M10" value="0.14249221445391377" />
+      <entry key="M15" value="0.27281029627412023" />
+      <entry key="M30" value="0.5223124508128443" />
+      <entry key="H1" value="0.7227118726109628" />
+      <entry key="H2" value="0.8501246218119801" />
+      <entry key="H4" value="0.9220220289190388" />
+      <entry key="D1" value="0.9865601056494107" />
+      <entry key="W1" value="0.9980688631637159" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.9395356710561805" />
+      <entry key="MS500" value="1.1101238798084154" />
+      <entry key="S2" value="1.9758864238126421" />
+      <entry key="S5" value="3.2984029026889896" />
+      <entry key="S10" value="4.935255632075539" />
+      <entry key="S30" value="7.203656481194549" />
+      <entry key="S60" value="8.030802540158126" />
+      <entry key="M2" value="8.528506304506596" />
+      <entry key="M5" value="10.277477788681923" />
+      <entry key="M10" value="16.2466663064686" />
+      <entry key="M15" value="21.748343160591606" />
+      <entry key="M30" value="31.51858892217657" />
+      <entry key="H1" value="38.990088313452226" />
+      <entry key="H2" value="43.62876971605147" />
+      <entry key="H4" value="46.215854648353705" />
+      <entry key="D1" value="48.52165625632933" />
+      <entry key="W1" value="48.93130590667347" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3KHV3u7w4SEa05LZrXyuJyJWARJ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "smolyakov__artem/lab1",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.jshint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-c6d794e1806d-5bd6d13a2a75-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-262.8665.309" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Задача по умолчанию">
+      <changelist id="0cae944a-2a12-40ab-870d-0ef2572bd035" name="Изменения" comment="" />
+      <created>1791214284464</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791214284464</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Add lab files: bike rental service, tests and README">
+      <option name="closed" value="true" />
+      <created>1791480563263</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1791480563263</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Refactoring">
+      <option name="closed" value="true" />
+      <created>1791484419431</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1791484419431</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="smolyakov_artem/lab1" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add lab files: bike rental service, tests and README" />
+    <MESSAGE value="Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
+  </component>
+</project>
