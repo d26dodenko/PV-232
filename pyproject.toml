@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "--color=no"
+
+[tool.coverage.run]
+branch = true
+source = ["pricing"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
