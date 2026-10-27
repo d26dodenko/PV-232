@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0cae944a-2a12-40ab-870d-0ef2572bd035" name="Изменения" comment="Refactoring" />
+    <list default="true" id="0cae944a-2a12-40ab-870d-0ef2572bd035" name="Изменения" comment="Add lab files: bike rental module, tests and README">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/TestingPS/lab1/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bike_rental.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestingPS/lab1/bike_rental.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_bike_rental.py" beforeDir="false" afterPath="$PROJECT_DIR$/TestingPS/lab1/test_bike_rental.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_result.png" beforeDir="false" afterPath="$PROJECT_DIR$/TestingPS/lab1/test_result.png" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,61 +46,61 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.000013470578028" />
-      <entry key="MS500" value="1.1235463900561904" />
-      <entry key="S2" value="1.9819868563557788" />
-      <entry key="S5" value="3.3080201876780353" />
-      <entry key="S10" value="4.945841510479209" />
-      <entry key="S30" value="7.209945551257332" />
-      <entry key="S60" value="8.034452424723355" />
-      <entry key="M2" value="8.530436618722431" />
-      <entry key="M5" value="10.25817420375118" />
-      <entry key="M10" value="16.10499856307588" />
-      <entry key="M15" value="21.476290928825584" />
-      <entry key="M30" value="30.996847811258554" />
-      <entry key="H1" value="38.267737827053" />
-      <entry key="H2" value="42.778849655716996" />
-      <entry key="H4" value="45.293941608429115" />
-      <entry key="D1" value="47.53511531683363" />
-      <entry key="W1" value="47.93323980701054" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000684781462963" />
+      <entry key="S2" value="1.0944712836802675" />
+      <entry key="S5" value="1.4874992213508886" />
+      <entry key="S10" value="1.9447181316436515" />
+      <entry key="S30" value="3.124783629765012" />
+      <entry key="S60" value="5.199790599575195" />
+      <entry key="M2" value="8.505411621670543" />
+      <entry key="M5" value="13.886390500317649" />
+      <entry key="M10" value="19.241590719586732" />
+      <entry key="M15" value="24.664953048159024" />
+      <entry key="M30" value="40.28917536417727" />
+      <entry key="H1" value="60.44581728790273" />
+      <entry key="H2" value="77.90620164559277" />
+      <entry key="H4" value="89.62117089820507" />
+      <entry key="D1" value="101.39188214276179" />
+      <entry key="W1" value="103.62183884376724" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="1.3719577952461456E-254" />
-      <entry key="S5" value="2.8506001302669998E-102" />
-      <entry key="S10" value="1.688372035502542E-51" />
-      <entry key="S30" value="1.1907558307089749E-17" />
-      <entry key="S60" value="3.450733010113903E-9" />
-      <entry key="M2" value="5.874294008741729E-5" />
-      <entry key="M5" value="0.020304031179980166" />
-      <entry key="M10" value="0.14249221445391377" />
-      <entry key="M15" value="0.27281029627412023" />
-      <entry key="M30" value="0.5223124508128443" />
-      <entry key="H1" value="0.7227118726109628" />
-      <entry key="H2" value="0.8501246218119801" />
-      <entry key="H4" value="0.9220220289190388" />
-      <entry key="D1" value="0.9865601056494107" />
-      <entry key="W1" value="0.9980688631637159" />
+      <entry key="MS500" value="2.7585484462071844E-297" />
+      <entry key="S2" value="1.0614015596184214E-74" />
+      <entry key="S5" value="3.8401366680445006E-30" />
+      <entry key="S10" value="2.7641004065555087E-15" />
+      <entry key="S30" value="2.22647553242575E-5" />
+      <entry key="S60" value="0.006672556486811572" />
+      <entry key="M2" value="0.1155210615111439" />
+      <entry key="M5" value="0.647413203554381" />
+      <entry key="M10" value="1.260258450163805" />
+      <entry key="M15" value="1.7020932601083965" />
+      <entry key="M30" value="2.5763158098976504" />
+      <entry key="H1" value="3.434090752907797" />
+      <entry key="H2" value="4.089882715040417" />
+      <entry key="H4" value="4.506149099185155" />
+      <entry key="D1" value="4.911564798871551" />
+      <entry key="W1" value="4.987205545693116" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9395356710561805" />
-      <entry key="MS500" value="1.1101238798084154" />
-      <entry key="S2" value="1.9758864238126421" />
-      <entry key="S5" value="3.2984029026889896" />
-      <entry key="S10" value="4.935255632075539" />
-      <entry key="S30" value="7.203656481194549" />
-      <entry key="S60" value="8.030802540158126" />
-      <entry key="M2" value="8.528506304506596" />
-      <entry key="M5" value="10.277477788681923" />
-      <entry key="M10" value="16.2466663064686" />
-      <entry key="M15" value="21.748343160591606" />
-      <entry key="M30" value="31.51858892217657" />
-      <entry key="H1" value="38.990088313452226" />
-      <entry key="H2" value="43.62876971605147" />
-      <entry key="H4" value="46.215854648353705" />
-      <entry key="D1" value="48.52165625632933" />
-      <entry key="W1" value="48.93130590667347" />
+      <entry key="MS100" value="0.9460576467255959" />
+      <entry key="MS500" value="0.9890386392745872" />
+      <entry key="S2" value="1.0914325021296256" />
+      <entry key="S5" value="1.485749506219842" />
+      <entry key="S10" value="1.9434825801209683" />
+      <entry key="S30" value="3.124043933775459" />
+      <entry key="S60" value="5.2056868798748495" />
+      <entry key="M2" value="8.619890720735274" />
+      <entry key="M5" value="14.532549144727993" />
+      <entry key="M10" value="20.50075497311511" />
+      <entry key="M15" value="26.366050513284904" />
+      <entry key="M30" value="42.86464983574511" />
+      <entry key="H1" value="63.87927513326683" />
+      <entry key="H2" value="81.99567682027815" />
+      <entry key="H4" value="94.12708571910261" />
+      <entry key="D1" value="106.30340278661883" />
+      <entry key="W1" value="108.60903794331045" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -108,24 +115,94 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "smolyakov__artem/lab1",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.jshint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.jshint": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python тесты.pytest в test_calculator.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python тесты.pytest.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;smolyakov__artem/lab1&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/paran/PycharmProjects/PV-232/Specification/lab1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\paran\PycharmProjects\PV-232\Specification\lab1" />
+      <recent name="C:\Users\paran\PycharmProjects\PV-232\Specification\Development models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\paran\PycharmProjects\PV-232\TestingPS\lab1" />
+      <recent name="C:\Users\paran\PycharmProjects\PV-232" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python тесты.pytest">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="PV-232" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Specification/lab1" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Specification/lab1/test_calculator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest" type="tests" factoryName="py.test" temporary="true">
+      <module name="PV-232" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <option name="RUN_TOOL" value="" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/Specification/lab1/test_calculator.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python тесты.pytest" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python тесты.pytest" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -157,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791484419431</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add lab files: bike rental module, tests and README">
+      <option name="closed" value="true" />
+      <created>1791485363564</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1791485363564</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +274,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add lab files: bike rental service, tests and README" />
     <MESSAGE value="Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
+    <MESSAGE value="Add lab files: bike rental module, tests and README" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add lab files: bike rental module, tests and README" />
   </component>
 </project>
