@@ -214,42 +214,42 @@ N00 создаёт отдельную запись для негативных �
 
 Полный прогон Collection Runner с результатами 332 Passed и 36 Failed:
 
-![Результаты Collection Runner](screenshots/collection-runner.png)
+![Результаты Collection Runner](LabAPI_Pryadko/screenshots/collection-runner.png)
 
 Остальные снимки я сделал при дополнительной ручной проверке запросов. Поэтому время ответа и ID записей на них могут отличаться от основного прогона.
 
 <details>
 <summary>Структура коллекции и авторизация</summary>
 
-![Папки Auth, Booking и Health](screenshots/collection-structure.png)
+![Папки Auth, Booking и Health](LabAPI_Pryadko/screenshots/collection-structure.png)
 
-![Успешное получение токена](screenshots/auth-success.png)
+![Успешное получение токена](LabAPI_Pryadko/screenshots/auth-success.png)
 
-![Неверный логин: HTTP 200 и Bad credentials](screenshots/auth-invalid-login.png)
+![Неверный логин: HTTP 200 и Bad credentials](LabAPI_Pryadko/screenshots/auth-invalid-login.png)
 
-![Неверный пароль: HTTP 200 и Bad credentials](screenshots/auth-invalid-password.png)
+![Неверный пароль: HTTP 200 и Bad credentials](LabAPI_Pryadko/screenshots/auth-invalid-password.png)
 
 </details>
 
 <details>
 <summary>Проверка доступности, списка и создания бронирования</summary>
 
-![Ping возвращает 201 Created](screenshots/health-ping.png)
+![Ping возвращает 201 Created](LabAPI_Pryadko/screenshots/health-ping.png)
 
-![Список идентификаторов бронирований](screenshots/booking-list.png)
+![Список идентификаторов бронирований](LabAPI_Pryadko/screenshots/booking-list.png)
 
-![Создание собственной записи для негативных проверок](screenshots/booking-create.png)
+![Создание собственной записи для негативных проверок](LabAPI_Pryadko/screenshots/booking-create.png)
 
 </details>
 
 <details>
 <summary>Некорректный JSON и граничные значения</summary>
 
-![Некорректный JSON возвращает 400 Bad Request](screenshots/booking-invalid-json.png)
+![Некорректный JSON возвращает 400 Bad Request](LabAPI_Pryadko/screenshots/booking-invalid-json.png)
 
-![Сервер принимает пустое имя](screenshots/booking-empty-firstname.png)
+![Сервер принимает пустое имя](LabAPI_Pryadko/screenshots/booking-empty-firstname.png)
 
-![Сервер сохраняет очень большую цену](screenshots/booking-large-price.png)
+![Сервер сохраняет очень большую цену](LabAPI_Pryadko/screenshots/booking-large-price.png)
 
 </details>
 
@@ -261,7 +261,7 @@ N00 создаёт отдельную запись для негативных �
 
 ## 9. Файлы и повторный запуск
 
-- [Коллекция LabAPI_Прядко](LabAPI_Прядко.postman_collection.json).
-- [Окружение LabAPI_Прядко](LabAPI_Прядко.postman_environment.json).
+- [Коллекция LabAPI_Прядко](LabAPI_Pryadko/LabAPI_Прядко.postman_collection.json).
+- [Окружение LabAPI_Прядко](LabAPI_Pryadko/LabAPI_Прядко.postman_environment.json).
 
 Для повторения я импортирую оба JSON-файла, выбираю окружение и запускаю всю коллекцию через **Run** с одной итерацией. Включаю **Persist responses for a session** и **Run collection without using stored cookies**, отключаю **Stop run if an error occurs**. Результаты смотрю во вкладках All, Passed и Failed; token и bookingId вручную не заполняю.
