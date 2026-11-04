@@ -1,0 +1,45 @@
+{
+	"id": "6aeb4f24e18a349686e0fedf",
+	"name": "LabAPI_Burtsev",
+	"timestamp": "2026-11-04T15:28:45.842Z",
+	"collection_id": "50Fa7Ca6dfe36fE05D0fdf29",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 24,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-11-04T15:28:36.007Z",
+	"totalFail": 0,
+	"results": [],
+	"count": 1,
+	"totalTime": 0,
+	"collection": {
+		"requests": [
+			{
+				"id": "8df772F17Fc7D65FF4F77E40"
+			},
+			{
+				"id": "DcBC513Ed5AE8541a4beB4E6"
+			},
+			{
+				"id": "aE8be2F7CAba2B21Be0afCD9"
+			},
+			{
+				"id": "43CE25ea75dea581E1047cB8"
+			},
+			{
+				"id": "1b6D77A91bdC584DDAc31ed9"
+			},
+			{
+				"id": "33bD2B680Aa7Eb32c8Ee9f4a"
+			},
+			{
+				"id": "ED781e7ecEbC23bbccfDA34c"
+			},
+			{
+				"id": "F16DDFabf206BB8b177Df551"
+			}
+		]
+	}
+}
