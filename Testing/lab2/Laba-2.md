@@ -407,7 +407,7 @@ pm.test("Response time is less than 2000ms", function () {
 
 | Параметр | Значение |
 |---|---|
-| Коллекция | LabAPI_Burtsev |
+| Коллекция | LabAPI_SAUL |
 | Источник | Runner |
 | Окружение | none |
 | Итераций | 1 |
