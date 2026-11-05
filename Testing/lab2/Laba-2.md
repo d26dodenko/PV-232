@@ -403,7 +403,7 @@ pm.test("Response time is less than 2000ms", function () {
 
 ## 6. Прогон в Collection Runner
 
-![Результаты прогона LabAPI_SAUL](screenshots/runner_results.png)
+![Результаты прогона LabAPI_SAUL](screenshots/runner_results.jpg)
 
 | Параметр | Значение |
 |---|---|
