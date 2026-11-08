@@ -117,6 +117,17 @@ Bandit проверяет Python-скрипт `check_coverage.py`. Safety пре
 
 Чтобы запретить merge при упавшем CI, в **Settings — Branches / Rulesets** для `main` нужно включить изменения через PR и выбрать `quality-gate` обязательной проверкой.
 
+После push в ветку `pryadko_bogdan/lab3` CI завершился со статусом Success. Все пять стадий прошли, время выполнения составило 1 минуту 46 секунд. Сохранены четыре артефакта.
+
+![Успешное выполнение стадий CI](screenshots/12-github-actions-pipeline-passed.png)
+
+<details>
+<summary>Запуск workflow после push</summary>
+
+![Успешный запуск GitHub Actions](screenshots/11-github-actions-run-passed.png)
+
+</details>
+
 ## Результаты
 
 При запуске `npm run check` прошли **82 теста**, линтер и сборка. npm audit не обнаружил уязвимостей, Bandit — проблем уровня HIGH. Результаты запуска от 09.11.2026 приведены ниже.
