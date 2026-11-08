@@ -1,0 +1,152 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      demo:
+        type: choice
+        default: none
+        options: [ none, unit, coverage, security, e2e ]
+        description: ""
+
+permissions:
+  contents: read
+
+env:
+  CI_DEMO: none
+
+jobs:
+  unit-lint:
+    name: unit-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - name: Unit tests and coverage gate
+        env:
+          DEMO: ${{ inputs.demo || env.CI_DEMO }}
+        run: |
+          case "$DEMO" in
+            unit) npm run demo:unit ;;
+            coverage) npm run demo:coverage ;;
+            *) npm run test:unit ;;
+          esac
+      - run: python3 scripts/check_coverage.py coverage/unit/coverage-summary.json
+      - run: npm run lint
+      - name: JavaScript security gate
+        env:
+          DEMO: ${{ inputs.demo || env.CI_DEMO }}
+        run: |
+          if [ "$DEMO" = security ]; then
+            npm run demo:security
+          else
+            npm run security
+          fi
+      - name: Python tooling security
+        run: |
+          python3 -m pip install bandit==1.8.6 safety==3.7.0
+          bash scripts/python-security.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-coverage-security
+          path: |
+            coverage/unit/
+            reports/
+          if-no-files-found: warn
+
+  build:
+    needs: unit-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: storefront-build
+          path: front/dist/
+          if-no-files-found: error
+
+  integration:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: storefront-build
+          path: front/dist/
+      - run: npm run test:integration
+      - run: python3 scripts/check_coverage.py coverage/integration/coverage-summary.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integration-reports
+          path: |
+            reports/integration.xml
+            coverage/integration/
+          if-no-files-found: warn
+
+  e2e:
+    needs: integration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: storefront-build
+          path: front/dist/
+      - run: npx playwright install --with-deps chromium
+      - name: Browser tests
+        env:
+          DEMO: ${{ inputs.demo || env.CI_DEMO }}
+        run: |
+          if [ "$DEMO" = e2e ]; then
+            npm run demo:e2e
+          else
+            npm run test:e2e
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-reports
+          path: |
+            playwright-report/
+            test-results/
+            reports/e2e.xml
+          if-no-files-found: warn
+
+  quality-gate:
+    needs: [ unit-lint, build, integration, e2e ]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: All required stages passed
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python3 -c 'import json, os; results=json.loads(os.environ["RESULTS"]); print(results); assert all(job["result"] == "success" for job in results.values()), "Pipeline blocked"'
