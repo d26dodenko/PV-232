@@ -1,0 +1,961 @@
+{
+	"info": {
+		"_postman_id": "cd830653-e431-4e4f-bb4c-57562267c8e4",
+		"name": "LabAPI_Smolyakov",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "59305491",
+		"_collection_link": "https://killern1nd404-722283.postman.co/workspace/K1lleaD's-Workspace~b6c61c0e-dea0-457c-8aa2-de13175f5ddd/collection/59305491-cd830653-e431-4e4f-bb4c-57562267c8e4?action=share&source=collection_link&creator=59305491"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Get Ping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 200\", () => pm.response.to.have.status(200));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ping",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ping"
+							]
+						},
+						"description": "# GET /ping — Проверка связи с сервером\n\n## Цель\n\nПроверить получение отклика от сервера.\n\n## Метод и URL\n\n- **Метод:** `GET`\n    \n- **URL:** `{{baseUrl}}/ping`\n    \n\n## Ожидаемый результат\n\nПолучение кода операции `200`."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Get Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Время < 2000 мс\", () => pm.expect(pm.response.responseTime).to.be.below(2000));",
+									"",
+									"pm.test(\"Есть token\", () => pm.expect(pm.response.json()).to.have.property(\"token\"));",
+									"",
+									"const res = pm.response.json();",
+									"if (res.token) { pm.environment.set(\"token\", res.token); }"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"username\": \"admin\", \n\"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth"
+							]
+						},
+						"description": "# POST /auth — Получение токена авторизации\n\n## Цель\n\nПолучить токен доступа (`token`), необходимый для выполнения операций,  \nтребующих авторизации (PUT, PATCH, DELETE). Токен автоматически сохраняется  \nв переменную окружения `token` скриптом во вкладке Tests и используется  \nв последующих запросах коллекции.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/auth`\n    \n\n## Входные данные\n\n{  \n\"username\": \"admin\",  \n\"password\": \"password123\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `200` и запись токена в переменную `token`."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Get Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 401\", () => pm.response.to.have.status(401));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"username\": \"wrong\", \n\"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth"
+							]
+						},
+						"description": "# POST /auth — Получение токена авторизации\n\n## Цель\n\nПолучить токен доступа (`token`), необходимый для выполнения операций,  \nтребующих авторизации (PUT, PATCH, DELETE). Токен автоматически сохраняется  \nв переменную окружения `token` скриптом во вкладке Tests и используется  \nв последующих запросах коллекции.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/auth`\n    \n\n## Входные данные\n\n{  \n\"username\": \"admin\",  \n\"password\": \"password123\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `200` и запись токена в переменную `token`."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Post Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Есть bookingid\", () => pm.expect(pm.response.json()).to.have.property(\"bookingid\"));",
+									"",
+									"const id = pm.response.json().bookingid;",
+									"pm.environment.set(\"bookingId\", id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Ivan\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 100,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи\n\n## Цель\n\nСоздать на сервере запись.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Ivan\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `200` и создание записи на сервере."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Booking (Reversed Dates)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Ivan\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 100,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-12-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи с некорректным порядком дат\n\n## Цель\n\nПроверить реакцию на попытку создать запись где выселение раньше заселения.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Ivan\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-12-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `400`."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Booking (Invalid Date)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Ivan\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 100,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-13-45\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи\n\n## Цель\n\nСоздать на сервере запись.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Ivan\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `200` и создание записи на сервере."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Booking (Zero totalprice)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Есть bookingid\", () => pm.expect(pm.response.json()).to.have.property(\"bookingid\"));",
+									"",
+									"const id = pm.response.json().bookingid;",
+									"pm.environment.set(\"bookingId\", id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Ivan\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 0,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи с нулевой стоимостью\n\n## Цель\n\nСоздать на сервере запись со стоимостью, равной 0.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Ivan\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 0,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `200` и создание записи на сервере."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Booking (Negative totalprice)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));",
+									"",
+									"pm.test(\"Есть bookingid\", () => pm.expect(pm.response.json()).to.have.property(\"bookingid\"));",
+									"",
+									"const id = pm.response.json().bookingid;",
+									"pm.environment.set(\"bookingId\", id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Ivan\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": -1,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи с отрицательной стоимостью\n\n## Цель\n\nПроверить реакцию на попытку создать запись с отрицательной стоимостью.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Ivan\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": -1,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `400`."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Booking (Overfull totalprice)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Есть bookingid\", () => pm.expect(pm.response.json()).to.have.property(\"bookingid\"));",
+									"",
+									"const id = pm.response.json().bookingid;",
+									"pm.environment.set(\"bookingId\", id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Ivan\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 999999999,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи с очень большой стоимостью\n\n## Цель\n\nСоздать на сервере запись с очень большой стоимостью.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Ivan\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 999999999,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `200` и создание записи на сервере."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Booking (Empty Firstname)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 100,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи с пустым именем\n\n## Цель\n\nПроверить реакцию на попытку создать запись с пустым именем.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n## Входные данные\n\n{  \n\"firstname\": \"\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `400`."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Booking (Overfull Firstname)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 100,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Создание записи со слишком длинным именем\n\n## Цель\n\nПроверить реакцию на попытку создать запись со слишком длинным именем.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `400`."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Post Booking (No firstname)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 100,\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Ошибка создания записи из-за отсутствия поля `firstname`\n\n## Цель\n\nПроверить реакцию на попытку создать запись при отсутствии необходимого поля.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `400`."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Post Booking (Wrong JSON)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  bad json\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Ошибка создания записи из-за неверного формата данных\n\n## Цель\n\n.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Ivan\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `200` и создание записи на сервере."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Post Booking (Wrong totalprice)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400\", () => pm.response.to.have.status(400));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Ivan\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": \"abc\",\n  \"depositpaid\": true,\n  \"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},\n  \"additionalneeds\": \"Breakfast\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking"
+							]
+						},
+						"description": "# POST /booking — Ошибка создания записи из-за передачи поля с неправильным типом данных.\n\n## Цель\n\nПроверить реакцию на попытку создать запись при вводе неподходящего типа данных.\n\n## Метод и URL\n\n- **Метод:** `POST`\n    \n- **URL:** `{{baseUrl}}/booking`\n    \n\n## Входные данные\n\n{  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 100,  \n\"depositpaid\": true,  \n\"bookingdates\": {\"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\"},  \n\"additionalneeds\": \"Breakfast\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода операции `400`."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/booking/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingId}}"
+							]
+						},
+						"description": "# GET /booking/{id} — Получение записи по id\n\n## Цель\n\nПолучить данные записи по его id.\n\n## Метод и URL\n\n- **Метод:** `GET`\n    \n- **URL:** `{{baseUrl}}/booking/{{bookingId}}`\n    \n\n## Ожидаемый результат\n\nПолучение кода операции `200` и данных о записе в формате JSON."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Get Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 404\", () => pm.response.to.have.status(404));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/booking/999999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"999999"
+							]
+						},
+						"description": "# GET /booking/999999 — Попытка получения несуществующей записи\n\n## Цель\n\nПроверить реакцию на попытку получить данные записи, которой не существует.\n\n## Метод и URL\n\n- **Метод:** `GET`\n    \n- **URL:** `{{baseUrl}}/booking/999999`\n\n## Ожидаемый результат\n\nПолучение кода операции `404`."
+					},
+					"response": []
+				},
+				{
+					"name": "Put Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Время ответа < 2000 мс\", () => pm.expect(pm.response.responseTime).to.be.below(2000));",
+									"",
+									"pm.test(\"Имя обновлено на Petr\", () => {",
+									"    const res = pm.response.json();",
+									"    pm.expect(res.firstname).to.eql(\"Petr\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Petr\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-11-01\",\n    \"checkout\": \"2026-11-05\"\n  },\n  \"additionalneeds\": \"Lunch\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingId}}"
+							]
+						},
+						"description": "# PUT /booking/{{bookingId}} — Полная перезапись данных записи\n\n## Цель\n\nПолностью перезаписать данные записи по её id.\n\n## Метод и URL\n\n- **Метод:** `PUT`\n    \n- **URL:** `{{baseUrl}}/booking/{{bookingId}}`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Petr\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 150,  \n\"depositpaid\": true,  \n\"bookingdates\": {  \n\"checkin\": \"2026-11-01\",  \n\"checkout\": \"2026-11-05\"  \n},  \n\"additionalneeds\": \"Lunch\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода `200` и успешное изменение данных записи."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Put Booking (No Token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 403\", () => pm.response.to.have.status(403));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Petr\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-11-01\",\n    \"checkout\": \"2026-11-05\"\n  },\n  \"additionalneeds\": \"Lunch\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingId}}"
+							]
+						},
+						"description": "# PUT /booking/{{bookingId}} — Попытка изменения данных записи без указания токена\n\n## Цель\n\nПроверить реакцию на попытку изменения данных без указания токена.\n\n## Метод и URL\n\n- **Метод:** `PUT`\n    \n- **URL:** `{{baseUrl}}/booking/{{bookingId}}`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Petr\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 150,  \n\"depositpaid\": true,  \n\"bookingdates\": {  \n\"checkin\": \"2026-11-01\",  \n\"checkout\": \"2026-11-05\"  \n},  \n\"additionalneeds\": \"Lunch\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода `403`."
+					},
+					"response": []
+				},
+				{
+					"name": "Negative Put Booking (Wrong Token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 403\", () => pm.response.to.have.status(403));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token=abc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Petr\",\n  \"lastname\": \"Ivanov\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-11-01\",\n    \"checkout\": \"2026-11-05\"\n  },\n  \"additionalneeds\": \"Lunch\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingId}}"
+							]
+						},
+						"description": "# PUT /booking/{{bookingId}} — Попытка изменения данных записи при указании неверного токена\n\n## Цель\n\nПроверить реакцию на попытку изменения данных при указании неверного токена.\n\n## Метод и URL\n\n- **Метод:** `PUT`\n    \n- **URL:** `{{baseUrl}}/booking/{{bookingId}}`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Petr\",  \n\"lastname\": \"Ivanov\",  \n\"totalprice\": 150,  \n\"depositpaid\": true,  \n\"bookingdates\": {  \n\"checkin\": \"2026-11-01\",  \n\"checkout\": \"2026-11-05\"  \n},  \n\"additionalneeds\": \"Lunch\"  \n}\n\n## Ожидаемый результат\n\nПолучение кода `403`."
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 200\", () => pm.response.to.have.status(200));",
+									"",
+									"pm.test(\"Имя обновлено на Sidor\", () => {",
+									"    const res = pm.response.json();",
+									"    pm.expect(res.firstname).to.eql(\"Sidor\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"firstname\": \"Sidor\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/booking/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingId}}"
+							]
+						},
+						"description": "# PATCH /booking/{{bookingId}} — Частичное изменение данных записи\n\n## Цель\n\nИзменить значение некоторых полей записи.\n\n## Метод и URL\n\n- **Метод:** `PATCH`\n    \n- **URL:** `{{baseUrl}}/booking/{{bookingId}}`\n    \n\n## Входные данные\n\n{  \n\"firstname\": \"Sidor\"\n}\n\n## Ожидаемый результат\n\nПолучение кода `200` и успешное изменение данных записи."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 201\", () => pm.response.to.have.status(201));",
+									"",
+									"pm.test(\"Время ответа < 2000 мс\", () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/booking/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingId}}"
+							]
+						},
+						"description": "# DELETE /booking/{{bookingId}} — Успешное удаление записи \n\n## Цель\n\nУдалить запись.\n\n## Метод и URL\n\n- **Метод:** `DELETE`\n    \n- **URL:** `{{baseUrl}}/booking/{{bookingId}}`\n\n## Ожидаемый результат\n\nПолучение кода `201` и успешное удаление записи."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 404\", () => pm.response.to.have.status(404));"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/booking/{{bookingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"booking",
+								"{{bookingId}}"
+							]
+						},
+						"description": "# GET /booking/{{bookingId}} — Попытка получение данных после удаления\n\n## Цель\n\nПроверить результат удаления записи.\n\n## Метод и URL\n\n- **Метод:** `GET`\n    \n- **URL:** `{{baseUrl}}/booking/{{bookingId}}`\n\n## Ожидаемый результат\n\nПолучение кода `404`."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

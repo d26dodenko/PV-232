@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0cae944a-2a12-40ab-870d-0ef2572bd035" name="Изменения" comment="Add lab 1 according to the specification">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0cae944a-2a12-40ab-870d-0ef2572bd035" name="Изменения" comment="Added total lab by Specification" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,61 +39,61 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0000000000000004" />
-      <entry key="S2" value="1.000166754713086" />
-      <entry key="S5" value="1.0418331790577207" />
-      <entry key="S10" value="1.3062671479787438" />
-      <entry key="S30" value="3.61665380641022" />
-      <entry key="S60" value="7.675418111075611" />
-      <entry key="M2" value="13.126410112978904" />
-      <entry key="M5" value="20.867242242163165" />
-      <entry key="M10" value="29.276656292727985" />
-      <entry key="M15" value="36.496098561413255" />
-      <entry key="M30" value="55.04268587965638" />
-      <entry key="H1" value="79.5350650551277" />
-      <entry key="H2" value="102.09021629800185" />
-      <entry key="H4" value="117.90320583936156" />
-      <entry key="D1" value="134.30101042853408" />
-      <entry key="W1" value="137.46223433542178" />
+      <entry key="MS100" value="1.0000000000000007" />
+      <entry key="MS500" value="1.0009432981630582" />
+      <entry key="S2" value="1.1808278658538978" />
+      <entry key="S5" value="1.6237628747273671" />
+      <entry key="S10" value="2.067093403223419" />
+      <entry key="S30" value="3.0467546939636554" />
+      <entry key="S60" value="4.389515418883157" />
+      <entry key="M2" value="6.346403028509078" />
+      <entry key="M5" value="8.921357432633867" />
+      <entry key="M10" value="10.516603710567475" />
+      <entry key="M15" value="11.920126061040566" />
+      <entry key="M30" value="19.912078519021936" />
+      <entry key="H1" value="42.889584431048846" />
+      <entry key="H2" value="77.00268393460746" />
+      <entry key="H4" value="108.34646752050575" />
+      <entry key="D1" value="147.30503226138512" />
+      <entry key="W1" value="155.56981860637174" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="5.989858275936124E-104" />
-      <entry key="S2" value="1.5644227997863918E-26" />
-      <entry key="S5" value="4.7614766035612487E-11" />
-      <entry key="S10" value="6.900345356256631E-6" />
-      <entry key="S30" value="0.019038100238360074" />
-      <entry key="S60" value="0.13797862723337817" />
-      <entry key="M2" value="0.3715530960785486" />
-      <entry key="M5" value="0.7112220636877826" />
-      <entry key="M10" value="1.1268575646363672" />
-      <entry key="M15" value="1.5395413362283188" />
-      <entry key="M30" value="2.5443188699385066" />
-      <entry key="H1" value="3.6807378803641924" />
-      <entry key="H2" value="4.618983658938651" />
-      <entry key="H4" value="5.240162285424992" />
-      <entry key="D1" value="5.862206967703206" />
-      <entry key="W1" value="5.980019424434957" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="7.380426687236755E-171" />
+      <entry key="S30" value="1.946975516284714E-57" />
+      <entry key="S60" value="4.4124547054853596E-29" />
+      <entry key="M2" value="6.644389829897053E-15" />
+      <entry key="M5" value="2.2541297406395887E-6" />
+      <entry key="M10" value="0.0020061152000877026" />
+      <entry key="M15" value="0.022614270540445" />
+      <entry key="M30" value="0.30836647306250087" />
+      <entry key="H1" value="1.281394035329462" />
+      <entry key="H2" value="2.7253377348435026" />
+      <entry key="H4" value="4.025146474719203" />
+      <entry key="D1" value="5.6100574148078435" />
+      <entry key="W1" value="5.942578167380668" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8705505632961241" />
-      <entry key="MS500" value="0.972654947412286" />
-      <entry key="S2" value="0.9932587081539975" />
-      <entry key="S5" value="1.0390041921647635" />
-      <entry key="S10" value="1.3042912365673023" />
-      <entry key="S30" value="3.623170848575908" />
-      <entry key="S60" value="7.7909394455793715" />
-      <entry key="M2" value="13.47498545621811" />
-      <entry key="M5" value="21.56376156179415" />
-      <entry key="M10" value="30.394506541205423" />
-      <entry key="M15" value="38.029013818095954" />
-      <entry key="M30" value="57.58311472832916" />
-      <entry key="H1" value="83.21354857463001" />
-      <entry key="H2" value="106.70794093425934" />
-      <entry key="H4" value="123.14269372479627" />
-      <entry key="D1" value="140.16309735101908" />
-      <entry key="W1" value="143.44223640139117" />
+      <entry key="MS100" value="0.9460576467255966" />
+      <entry key="MS500" value="0.989903810828347" />
+      <entry key="S2" value="1.1775565234152854" />
+      <entry key="S5" value="1.6219456885521066" />
+      <entry key="S10" value="2.0659227789604495" />
+      <entry key="S30" value="3.0461734168686183" />
+      <entry key="S60" value="4.389095316651278" />
+      <entry key="M2" value="6.346083275461434" />
+      <entry key="M5" value="8.921161450560218" />
+      <entry key="M10" value="10.518470959478822" />
+      <entry key="M15" value="11.94255156943408" />
+      <entry key="M30" value="20.219918990470898" />
+      <entry key="H1" value="44.170162324503345" />
+      <entry key="H2" value="79.72726168290336" />
+      <entry key="H4" value="112.3710869536746" />
+      <entry key="D1" value="152.91497322129254" />
+      <entry key="W1" value="161.51237929736178" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -120,9 +118,9 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "smolyakov__artem/lab1",
+    "git-widget-placeholder": "smolyakov__artem/labs",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/paran/PycharmProjects/PV-232/Specification/total",
+    "last_opened_file_path": "C:/Users/paran/PycharmProjects/PV-232/TestingPS/lab2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",
@@ -135,6 +133,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\paran\PycharmProjects\PV-232\TestingPS\lab2" />
       <recent name="C:\Users\paran\PycharmProjects\PV-232\Specification\total" />
       <recent name="C:\Users\paran\PycharmProjects\PV-232\Specification\lab1" />
       <recent name="C:\Users\paran\PycharmProjects\PV-232\Specification\Development models" />
@@ -246,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793100918311</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added total lab by Specification">
+      <option name="closed" value="true" />
+      <created>1794136397373</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1794136397373</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,6 +287,7 @@
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Add lab files: bike rental module, tests and README" />
     <MESSAGE value="Add lab 1 according to the specification" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add lab 1 according to the specification" />
+    <MESSAGE value="Added total lab by Specification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added total lab by Specification" />
   </component>
 </project>
