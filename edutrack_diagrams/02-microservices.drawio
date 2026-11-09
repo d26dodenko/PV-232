@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" pages="1">
+  <diagram id="02-microservices" name="Микросервисная архитектура">
+    <mxGraphModel dx="1280" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1450" pageHeight="910" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_title" value="Микросервисная архитектура" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#18324A;" vertex="1" parent="1">
+          <mxGeometry x="56" y="32" width="1338" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="_subtitle" value="Каждый сервис развёртывается отдельно и владеет своими данными" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#62758A;" vertex="1" parent="1">
+          <mxGeometry x="58" y="91" width="1338" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="ui" value="&lt;b&gt;Веб-интерфейс&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;React&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="55" y="355" width="210" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="gw" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Общий вход в API&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#F0EDFA;strokeColor=#B8ABE8;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="327" y="355" width="210" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="auth" value="&lt;b&gt;Identity&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Пользователи и роли&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="678" y="145" width="260" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="auth_db" value="&lt;b&gt;Identity DB&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#62758A&quot; style=&quot;font-size:13px&quot;&gt;Своя база&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="146" width="190" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="course" value="&lt;b&gt;Course&lt;/b&gt;&lt;br&gt;Курсы, уроки, задания" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="678" y="254" width="260" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="course_db" value="&lt;b&gt;Course DB&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#62758A&quot; style=&quot;font-size:13px&quot;&gt;Своя база&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="255" width="190" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="learn" value="&lt;b&gt;Learning&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Запись и решения&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="678" y="363" width="260" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="learn_db" value="&lt;b&gt;Learning DB&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#62758A&quot; style=&quot;font-size:13px&quot;&gt;Своя база&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="364" width="190" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="assess" value="&lt;b&gt;Assessment&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Оценки и проверка&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="678" y="472" width="260" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="assess_db" value="&lt;b&gt;Assessment DB&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#62758A&quot; style=&quot;font-size:13px&quot;&gt;Своя база&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="473" width="190" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="progress" value="&lt;b&gt;Progress&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Результаты и прогресс&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="678" y="581" width="260" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="progress_db" value="&lt;b&gt;Progress DB&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#62758A&quot; style=&quot;font-size:13px&quot;&gt;Своя база&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="582" width="190" height="73" as="geometry" />
+        </mxCell>
+        <mxCell id="link_auth" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="gw" target="auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db_auth" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="auth" target="auth_db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_course" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="gw" target="course">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db_course" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="course" target="course_db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_learn" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="gw" target="learn">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db_learn" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="learn" target="learn_db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_assess" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="gw" target="assess">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db_assess" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="assess" target="assess_db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="link_progress" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="gw" target="progress">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db_progress" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="progress" target="progress_db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_note_0" value="HTTP: Learning обращается к Course; Assessment к Course и Learning. События передаются через брокер в Progress. Чужие БД недоступны." style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=14;fontColor=#62758A;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="838" width="1330" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ui_gateway" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="ui" target="gw">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="broker" value="&lt;b&gt;Брокер событий&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0EBFA;strokeColor=#B7A5DF;align=center;verticalAlign=middle;fontColor=#18324A;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1020" y="708" width="240" height="60" />
+        </mxCell>
+        <mxCell id="events_course" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=block;endFill=1;exitX=1;exitY=0.85;entryX=0;entryY=0.2;dashed=1;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="course" target="broker">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="960" y="317.0" />
+              <mxPoint x="960" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="events_learn" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=block;endFill=1;exitX=1;exitY=0.85;entryX=0;entryY=0.5;dashed=1;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="learn" target="broker">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="974" y="426.0" />
+              <mxPoint x="974" y="738" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="events_assess" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=block;endFill=1;exitX=1;exitY=0.85;entryX=0;entryY=0.8;dashed=1;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="assess" target="broker">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="988" y="535.0" />
+              <mxPoint x="988" y="756" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="events_progress" value="События" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=1;dashed=1;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="broker" target="progress">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1140" y="800" />
+              <mxPoint x="808" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

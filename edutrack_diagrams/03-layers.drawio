@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" pages="1">
+  <diagram id="03-layers" name="Многослойная архитектура">
+    <mxGraphModel dx="1280" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1250" pageHeight="870" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_title" value="Многослойная архитектура" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#18324A;" vertex="1" parent="1">
+          <mxGeometry x="56" y="32" width="1138" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="_subtitle" value="Логическое разделение кода внутри выбранного монолита" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#62758A;" vertex="1" parent="1">
+          <mxGeometry x="58" y="91" width="1138" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="&lt;b&gt;Браузер пользователя&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Студент, преподаватель, администратор&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#EAF0F5;strokeColor=#C4D1DE;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="465" y="153" width="320" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="presentation" value="1. Представление" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FBFCFE;strokeColor=#91B7DF;strokeWidth=1.8;align=left;verticalAlign=top;fontColor=#18324A;fontStyle=1;fontSize=18;spacingTop=19;spacingLeft=23;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="149" y="243" width="952" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="react" value="&lt;b&gt;React&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Страницы и формы&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="198" y="300" width="372" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="controller" value="&lt;b&gt;REST-контроллеры&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;HTTP и DTO&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="680" y="300" width="372" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="business" value="2. Бизнес-логика" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FBFCFE;strokeColor=#8CC9AB;strokeWidth=1.8;align=left;verticalAlign=top;fontColor=#18324A;fontStyle=1;fontSize=18;spacingTop=19;spacingLeft=23;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="149" y="424" width="952" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="services" value="&lt;b&gt;Сервисы&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Курсы, обучение, оценки&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="198" y="480" width="372" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="rules" value="&lt;b&gt;Проверки&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot; color=&quot;#62758A&quot;&gt;Роли, сроки, баллы&lt;/font&gt;" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="680" y="480" width="372" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="data" value="3. Доступ к данным" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FBFCFE;strokeColor=#E7BF76;strokeWidth=1.8;align=left;verticalAlign=top;fontColor=#18324A;fontStyle=1;fontSize=18;spacingTop=19;spacingLeft=23;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="149" y="605" width="952" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="repos" value="&lt;b&gt;Репозитории и ORM&lt;/b&gt;&lt;br&gt;Чтение и запись" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="198" y="660" width="372" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="orm" value="&lt;b&gt;Миграции схемы&lt;/b&gt;&lt;br&gt;При развёртывании" style="rounded=1;arcSize=13;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="680" y="660" width="372" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="pg" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#62758A&quot; style=&quot;font-size:13px&quot;&gt;База данных&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#EAF0F5;strokeColor=#C4D1DE;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontSize=16;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="465" y="780" width="320" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="layers1" value="Интерфейс" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="user" target="react">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="layers2" value="HTTP / JSON" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="react" target="controller">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="layers3" value="Вызов операции" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="controller" target="services">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="866" y="402" />
+              <mxPoint x="385" y="402" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="layers4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="services" target="rules">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="layers5" value="Чтение / запись" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="services" target="repos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="repository_sql" value="SQL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.25;entryY=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="repos" target="pg">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="384" y="750" />
+              <mxPoint x="545" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="migration_sql" value="DDL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.75;entryY=0;dashed=1;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="orm" target="pg">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="866" y="750" />
+              <mxPoint x="705" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" pages="1">
+  <diagram id="04-use-case" name="Диаграмма вариантов использования">
+    <mxGraphModel dx="1280" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1440" pageHeight="980" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_title" value="Диаграмма вариантов использования" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#18324A;" vertex="1" parent="1">
+          <mxGeometry x="56" y="32" width="1328" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="_subtitle" value="Основные действия трёх ролей в EduTrack" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#62758A;" vertex="1" parent="1">
+          <mxGeometry x="58" y="91" width="1328" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="frame" value="EduTrack" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FBFCFE;strokeColor=#C4D1DE;strokeWidth=1.8;align=center;verticalAlign=top;fontColor=#18324A;fontStyle=1;fontSize=18;spacingTop=19;spacingLeft=0;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="44" y="255" width="1350" height="658" as="geometry" />
+        </mxCell>
+        <mxCell id="student" value="Студент" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#18324A;fontColor=#1F3346;fontFamily=Arial;fontSize=16;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="208" y="157" width="70" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="teacher" value="Преподаватель" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#18324A;fontColor=#1F3346;fontFamily=Arial;fontSize=16;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="700" y="157" width="70" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" value="Администратор" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeColor=#18324A;fontColor=#1F3346;fontFamily=Arial;fontSize=16;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1169" y="157" width="70" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="reg" value="Регистрация и вход" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="97" y="294" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="catalog" value="Каталог и запись" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="97" y="409" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="lesson" value="Просмотр уроков" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="97" y="524" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="submit" value="Отправка решения" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="97" y="639" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="grades" value="Оценки и прогресс" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E7F1FB;strokeColor=#91B7DF;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="97" y="754" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="tlogin" value="Вход в систему" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="591" y="311" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="editcourse" value="Управление курсами" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="591" y="426" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="creatework" value="Создание заданий" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="591" y="541" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="check" value="Проверка работ" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#E5F5ED;strokeColor=#8CC9AB;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="591" y="656" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="alogin" value="Вход в систему" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#F0EDFA;strokeColor=#B8ABE8;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1053" y="329" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="roles" value="Назначение ролей" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#F0EDFA;strokeColor=#B8ABE8;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1053" y="444" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="manage" value="Управление курсами" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#F0EDFA;strokeColor=#B8ABE8;strokeWidth=1.5;align=center;verticalAlign=middle;fontColor=#1F3346;fontStyle=1;fontSize=17;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1053" y="559" width="300" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_reg" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="student" target="reg">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="72" y="270" />
+              <mxPoint x="72" y="327.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_catalog" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="student" target="catalog">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="72" y="270" />
+              <mxPoint x="72" y="442.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_lesson" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="student" target="lesson">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="72" y="270" />
+              <mxPoint x="72" y="557.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_submit" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="student" target="submit">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="72" y="270" />
+              <mxPoint x="72" y="672.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_grades" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="student" target="grades">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="72" y="270" />
+              <mxPoint x="72" y="787.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_tlogin" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="teacher" target="tlogin">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="564" y="270" />
+              <mxPoint x="564" y="344.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_editcourse" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="teacher" target="editcourse">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="564" y="270" />
+              <mxPoint x="564" y="459.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_creatework" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="teacher" target="creatework">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="564" y="270" />
+              <mxPoint x="564" y="574.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_check" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="teacher" target="check">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="564" y="270" />
+              <mxPoint x="564" y="689.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_alogin" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin" target="alogin">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1026" y="270" />
+              <mxPoint x="1026" y="362.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_roles" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin" target="roles">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1026" y="270" />
+              <mxPoint x="1026" y="477.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uc_manage" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9AB1C4;strokeWidth=1;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="admin" target="manage">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1026" y="270" />
+              <mxPoint x="1026" y="592.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_note_0" value="Связи показывают, какие пользовательские сценарии доступны каждой роли." style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=14;fontColor=#62758A;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="946" width="1320" height="32" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
