@@ -1,0 +1,16 @@
+# Виртуальные окружения Python
+.venv/
+venv/
+env/
+
+# Кэш Python и Pytest
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Файлы покрытия (coverage)
+.coverage
+htmlcov/
+
+# Настройки PyCharm
+.idea/
