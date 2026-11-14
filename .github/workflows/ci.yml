@@ -1,8 +1,15 @@
-name: CI
+name: Testing Laba-3
 
 on:
   push:
+    branches: [pryadko_bogdan]
+    paths:
+      - 'TestingPS/Laba-3/**'
+      - '.github/workflows/ci.yml'
   pull_request:
+    paths:
+      - 'TestingPS/Laba-3/**'
+      - '.github/workflows/ci.yml'
   workflow_dispatch:
     inputs:
       demo:
@@ -10,6 +17,10 @@ on:
         default: none
         options: [ none, unit, coverage, security, e2e ]
         description: ""
+
+defaults:
+  run:
+    working-directory: TestingPS/Laba-3
 
 permissions:
   contents: read
@@ -27,6 +38,7 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+          cache-dependency-path: TestingPS/Laba-3/package-lock.json
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -60,8 +72,8 @@ jobs:
         with:
           name: unit-coverage-security
           path: |
-            coverage/unit/
-            reports/
+            TestingPS/Laba-3/coverage/unit/
+            TestingPS/Laba-3/reports/
           if-no-files-found: warn
 
   build:
@@ -73,12 +85,13 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+          cache-dependency-path: TestingPS/Laba-3/package-lock.json
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-artifact@v4
         with:
           name: storefront-build
-          path: front/dist/
+          path: TestingPS/Laba-3/front/dist/
           if-no-files-found: error
 
   integration:
@@ -90,11 +103,12 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+          cache-dependency-path: TestingPS/Laba-3/package-lock.json
       - run: npm ci
       - uses: actions/download-artifact@v4
         with:
           name: storefront-build
-          path: front/dist/
+          path: TestingPS/Laba-3/front/dist/
       - run: npm run test:integration
       - run: python3 scripts/check_coverage.py coverage/integration/coverage-summary.json
       - uses: actions/upload-artifact@v4
@@ -102,8 +116,8 @@ jobs:
         with:
           name: integration-reports
           path: |
-            reports/integration.xml
-            coverage/integration/
+            TestingPS/Laba-3/reports/integration.xml
+            TestingPS/Laba-3/coverage/integration/
           if-no-files-found: warn
 
   e2e:
@@ -115,11 +129,12 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+          cache-dependency-path: TestingPS/Laba-3/package-lock.json
       - run: npm ci
       - uses: actions/download-artifact@v4
         with:
           name: storefront-build
-          path: front/dist/
+          path: TestingPS/Laba-3/front/dist/
       - run: npx playwright install --with-deps chromium
       - name: Browser tests
         env:
@@ -135,9 +150,9 @@ jobs:
         with:
           name: playwright-reports
           path: |
-            playwright-report/
-            test-results/
-            reports/e2e.xml
+            TestingPS/Laba-3/playwright-report/
+            TestingPS/Laba-3/test-results/
+            TestingPS/Laba-3/reports/e2e.xml
           if-no-files-found: warn
 
   quality-gate:
@@ -146,6 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: All required stages passed
+        working-directory: ${{ runner.temp }}
         env:
           RESULTS: ${{ toJSON(needs) }}
         run: |

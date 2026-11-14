@@ -1,0 +1,1692 @@
+{
+  "info": {
+    "_postman_id": "fd5f7b9f-5d9c-479b-b54c-e6eafe5829fe",
+    "name": "LabAPI_Прядко",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "ЛР №3. Прядко Богдан Васильевич, ПВ-232. Общие Tests выполняются для каждого запроса. Запускать всю коллекцию с окружением. Служебные GET/DELETE через pm.sendRequest проверяют неизменность и удаляют только свои записи."
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "(() => {",
+          "  if (pm.info.requestName.startsWith('A01 ')) {",
+          "    ['token','bookingId','fixtureId','missingId','expectedBooking','fixtureBooking'].forEach(k => pm.environment.unset(k));",
+          "    pm.environment.set('ownedIds','[]'); pm.environment.set('_labResults','[]');",
+          "    pm.environment.set('runTag',Date.now().toString(36));",
+          "  }",
+          "  pm.variables.set('longName','Я'.repeat(1001));",
+          "  const id = pm.request.url.toString().match(/\\{\\{(bookingId|fixtureId|missingId)\\}\\}/);",
+          "  if (id) {",
+          "    const target = Number(pm.environment.get(id[1]));",
+          "    if (!target || !JSON.parse(pm.environment.get('ownedIds') || '[]').includes(target)) throw new Error('Нет собственного ID: '+id[1]);",
+          "  }",
+          "})();"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "(() => {",
+          "  const cases = {\"A01\":{\"mode\":\"auth\",\"status\":200,\"doc\":200},\"A02\":{\"mode\":\"badAuth\",\"status\":401},\"A03\":{\"mode\":\"badAuth\",\"status\":401},\"A04\":{\"mode\":\"badAuth\",\"status\":401},\"A05\":{\"mode\":\"badAuth\",\"status\":401},\"H01\":{\"mode\":\"ping\",\"status\":201,\"doc\":201},\"P01\":{\"mode\":\"list\",\"status\":200,\"doc\":200},\"P02\":{\"mode\":\"create\",\"status\":200,\"doc\":200},\"P03\":{\"mode\":\"read\",\"status\":200,\"doc\":200},\"P04\":{\"mode\":\"update\",\"status\":200,\"doc\":200},\"P05\":{\"mode\":\"read\",\"status\":200,\"doc\":200},\"P06\":{\"mode\":\"patch\",\"status\":200,\"doc\":200},\"P07\":{\"mode\":\"read\",\"status\":200,\"doc\":200},\"P08\":{\"mode\":\"filter\",\"status\":200,\"present\":true,\"doc\":200},\"P09\":{\"mode\":\"filter\",\"status\":200,\"present\":true,\"doc\":200},\"P10\":{\"mode\":\"filter\",\"status\":200,\"present\":true,\"doc\":200},\"P11\":{\"mode\":\"filter\",\"status\":200,\"present\":true,\"doc\":200},\"P12\":{\"mode\":\"filter\",\"status\":200,\"present\":false,\"doc\":200},\"P13\":{\"mode\":\"filter\",\"status\":200,\"present\":true,\"doc\":200},\"P14\":{\"mode\":\"delete\",\"status\":201,\"doc\":201},\"P15\":{\"mode\":\"absent\",\"status\":404},\"N00\":{\"mode\":\"fixture\",\"status\":200,\"doc\":200},\"N01\":{\"mode\":\"denied\",\"status\":403},\"N02\":{\"mode\":\"denied\",\"status\":403},\"N03\":{\"mode\":\"denied\",\"status\":403},\"N04\":{\"mode\":\"denied\",\"status\":403},\"N05\":{\"mode\":\"absent\",\"status\":404},\"N06\":{\"mode\":\"error\",\"status\":404},\"N07\":{\"mode\":\"error\",\"status\":404},\"N08\":{\"mode\":\"error\",\"status\":404},\"N09\":{\"mode\":\"candidate\",\"status\":400},\"N10\":{\"mode\":\"candidate\",\"status\":400},\"N11\":{\"mode\":\"candidate\",\"status\":400},\"N12\":{\"mode\":\"candidate\",\"status\":400},\"N13\":{\"mode\":\"invalidPut\",\"status\":400},\"N14\":{\"mode\":\"unsupported\",\"status\":405},\"N15\":{\"mode\":\"delete\",\"status\":201,\"doc\":201},\"N16\":{\"mode\":\"absent\",\"status\":404},\"B01\":{\"mode\":\"candidate\",\"status\":400},\"B02\":{\"mode\":\"candidate\",\"status\":400},\"B03\":{\"mode\":\"candidate\",\"status\":200,\"doc\":200},\"B04\":{\"mode\":\"candidate\",\"status\":200,\"doc\":200},\"B05\":{\"mode\":\"candidate\",\"status\":200,\"doc\":200},\"B06\":{\"mode\":\"candidate\",\"status\":400},\"B07\":{\"mode\":\"candidate\",\"status\":200,\"doc\":200},\"B08\":{\"mode\":\"candidate\",\"status\":200,\"doc\":200},\"B09\":{\"mode\":\"candidate\",\"status\":400},\"B10\":{\"mode\":\"candidate\",\"status\":400},\"B11\":{\"mode\":\"candidate\",\"status\":200,\"doc\":200},\"B12\":{\"mode\":\"candidate\",\"status\":400},\"B13\":{\"mode\":\"candidate\",\"status\":400},\"B14\":{\"mode\":\"candidate\",\"status\":400}};",
+          "  const id = pm.info.requestName.split(' ')[0], spec = cases[id];",
+          "  const type = pm.response.headers.get('Content-Type') || '';",
+          "  let answer = null;",
+          "  if (/json/i.test(type)) { try { answer = pm.response.json(); } catch (_) {} }",
+          "  const results = JSON.parse(pm.environment.get('_labResults') || '[]');",
+          "  const row = {id,name:pm.info.requestName,method:pm.request.method,url:pm.variables.replaceIn(pm.request.url.toString()),input:pm.request.body ? pm.variables.replaceIn(pm.request.body.raw) : '',expected:spec.status,doc:spec.doc || null,code:pm.response.code,body:pm.response.text(),time:pm.response.responseTime,checks:[],aux:[]};",
+          "  results.push(row);",
+          "  const save = () => pm.environment.set('_labResults',JSON.stringify(results));",
+          "  function check(name, fn) {",
+          "    pm.test(name, function () {",
+          "      try { fn(); row.checks.push({name,passed:true}); }",
+          "      catch (e) { row.checks.push({name,passed:false,error:e.message}); throw e; }",
+          "      finally { save(); }",
+          "    });",
+          "  }",
+          "  function schema(b) {",
+          "    pm.expect(b).to.have.all.keys('firstname','lastname','totalprice','depositpaid','bookingdates','additionalneeds');",
+          "    pm.expect(b.firstname).to.be.a('string'); pm.expect(b.lastname).to.be.a('string');",
+          "    pm.expect(b.totalprice).to.be.a('number'); pm.expect(Number.isFinite(b.totalprice)).to.eql(true);",
+          "    pm.expect(b.depositpaid).to.be.a('boolean'); pm.expect(b.additionalneeds).to.be.a('string');",
+          "    pm.expect(b.bookingdates).to.have.all.keys('checkin','checkout');",
+          "    for (const key of ['checkin','checkout']) {",
+          "      const date=b.bookingdates[key]; pm.expect(date).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+          "      pm.expect(new Date(date).toISOString().slice(0,10)).to.eql(date);",
+          "    }",
+          "  }",
+          "  function auxiliary(method, bookingId, expected, done) {",
+          "    const own=JSON.parse(pm.environment.get('ownedIds') || '[]');",
+          "    if (!own.includes(bookingId)) throw new Error('Чужой ID запрещён');",
+          "    const request={url:pm.environment.get('baseUrl')+'/booking/'+bookingId,method,header:{Accept:'application/json'}};",
+          "    if (method==='DELETE') request.header.Cookie='token='+pm.environment.get('token');",
+          "    pm.sendRequest(request,(error,response) => {",
+          "      row.aux.push({method,id:bookingId,code:response && response.code,body:response && response.text(),time:response && response.responseTime,error:error && error.message}); save();",
+          "      check('[CONTROL] '+method+' /booking/'+bookingId+' → '+expected,()=>{pm.expect(error).to.eql(null);pm.expect(response.code).to.eql(expected);});",
+          "      if (!error && response && done) done(response);",
+          "    });",
+          "  }",
+          "  check('[HTTP] Ожидается '+spec.status,()=>pm.response.to.have.status(spec.status));",
+          "  check('[TIME] Ответ < 2000 мс',()=>pm.expect(pm.response.responseTime).to.be.below(2000));",
+          "  check('[HTTP] Нет серверной ошибки',()=>pm.expect(pm.response.code).to.be.below(500));",
+          "  check('[FORMAT] Тело соответствует Content-Type',()=>{pm.expect(pm.response.text()).not.to.eql('');if(/json/i.test(type))pm.expect(answer).not.to.eql(null);else pm.expect(type).to.match(/text\\//);});",
+          "  const mode=spec.mode;",
+          "  if (mode==='auth') {",
+          "    check('[FUNC] Получен непустой токен',()=>{pm.expect(answer).to.have.all.keys('token');pm.expect(answer.token).to.be.a('string').and.not.empty;});",
+          "    if (pm.response.code===200 && answer && answer.token) pm.environment.set('token',pm.response.json().token);",
+          "    check('[FUNC] Токен сохранён',()=>pm.expect(pm.environment.get('token')).to.eql(answer && answer.token));",
+          "  } else if (mode==='badAuth') {",
+          "    check('[FUNC] Токен не выдан',()=>{pm.expect(answer).to.have.all.keys('reason');pm.expect(answer.reason).to.eql('Bad credentials');});",
+          "    check('[FUNC] Рабочий токен сохранён',()=>pm.expect(pm.environment.get('token')).to.be.a('string').and.not.empty);",
+          "  } else if (mode==='ping' || mode==='delete') {",
+          "    check('[FUNC] Текст Created',()=>pm.expect(pm.response.text()).to.eql('Created'));",
+          "  } else if (mode==='create' || mode==='fixture' || mode==='candidate') {",
+          "    if (answer && Number.isInteger(answer.bookingid) && answer.bookingid>0) {",
+          "      const own=JSON.parse(pm.environment.get('ownedIds') || '[]');own.push(answer.bookingid);pm.environment.set('ownedIds',JSON.stringify(own));",
+          "      if (mode!=='candidate') {",
+          "        const slot=mode==='create'?'bookingId':'fixtureId';pm.environment.set(slot,pm.response.json().bookingid);",
+          "        pm.environment.set(mode==='create'?'expectedBooking':'fixtureBooking',JSON.stringify(answer.booking));",
+          "        check('[FUNC] bookingId сохранён автоматически',()=>pm.expect(Number(pm.environment.get(slot))).to.eql(answer.bookingid));",
+          "      }",
+          "    }",
+          "    if (spec.status===200) {",
+          "      check('[FUNC] Создано бронирование с ID',()=>{pm.expect(answer).to.have.all.keys('bookingid','booking');pm.expect(answer.bookingid).to.be.a('number').above(0);});",
+          "      check('[FUNC] Переданные данные сохранены',()=>pm.expect(answer.booking).to.deep.eql(JSON.parse(row.input)));",
+          "    } else check('[VALIDATION] Объект не создан',()=>pm.expect(answer && answer.bookingid).not.to.be.a('number'));",
+          "    check('[DOC] Схема успешного бронирования',()=>{if(pm.response.code<300)schema(answer.booking);});",
+          "    if (mode==='candidate' && answer && Number.isInteger(answer.bookingid)) {",
+          "      const created=answer.bookingid;",
+          "      auxiliary('GET',created,200,response=>{",
+          "        let stored=null;try{stored=response.json();}catch(_){}",
+          "        check('[CONTROL] Созданные данные доступны по GET',()=>pm.expect(stored).to.deep.eql(answer.booking));",
+          "        auxiliary('DELETE',created,201,()=>auxiliary('GET',created,404));",
+          "      });",
+          "    }",
+          "  } else if (mode==='read' || mode==='update' || mode==='patch') {",
+          "    let expected=JSON.parse(pm.environment.get('expectedBooking'));",
+          "    if(mode==='update')expected=JSON.parse(row.input);",
+          "    if(mode==='patch')expected=Object.assign(expected,JSON.parse(row.input));",
+          "    check('[DOC] Схема бронирования',()=>schema(answer));",
+          "    check('[FUNC] Поля и неизменённые данные верны',()=>pm.expect(answer).to.deep.eql(expected));",
+          "    if((mode==='update'||mode==='patch') && pm.response.code===200)pm.environment.set('expectedBooking',JSON.stringify(expected));",
+          "  } else if (mode==='list' || mode==='filter') {",
+          "    check('[DOC] Массив уникальных bookingid',()=>{pm.expect(answer).to.be.an('array');answer.forEach(x=>{pm.expect(x).to.have.all.keys('bookingid');pm.expect(x.bookingid).to.be.a('number');});pm.expect(new Set(answer.map(x=>x.bookingid)).size).to.eql(answer.length);});",
+          "    if(mode==='filter')check('[DOC] Фильтр соответствует документации',()=>pm.expect(answer.some(x=>x.bookingid===Number(pm.environment.get('bookingId')))).to.eql(spec.present));",
+          "  } else if (mode==='absent') {",
+          "    check('[FUNC] Not Found без данных бронирования',()=>pm.expect(pm.response.text()).to.eql('Not Found'));",
+          "    if(id==='P15' && pm.response.code===404)pm.environment.set('missingId',pm.environment.get('bookingId'));",
+          "  } else if (mode==='denied') {",
+          "    check('[FUNC] Доступ запрещён',()=>pm.expect(pm.response.text()).to.eql('Forbidden'));",
+          "    if(id!=='N04')check('[AUTH] Cookie и Authorization отсутствуют',()=>{pm.expect(pm.request.headers.has('Cookie')).to.eql(false);pm.expect(pm.request.headers.has('Authorization')).to.eql(false);});",
+          "  }",
+          "  if (mode==='denied' || mode==='invalidPut' || mode==='unsupported') {",
+          "    auxiliary('GET',Number(pm.environment.get('fixtureId')),200,response=>{",
+          "      check('[CONTROL] Фикстура не изменилась',()=>pm.expect(response.json()).to.deep.eql(JSON.parse(pm.environment.get('fixtureBooking'))));",
+          "    });",
+          "  }",
+          "  if(pm.request.headers.get('Cookie')==='token={{token}}')check('[AUTH] Токен окружения получен',()=>pm.expect(pm.environment.get('token')).to.be.a('string').and.not.empty);",
+          "  if(id==='A01')postman.setNextRequest('H01 Проверить доступность');",
+          "  if(id==='P15')postman.setNextRequest('A02 Неверный логин');",
+          "  if(id==='A05')postman.setNextRequest('N00 Создать собственную фикстуру');",
+          "  save();",
+          "})();"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "A01 Получить токен",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Цель: Получить токен. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"admin\",\"password\":\"password123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          }
+        },
+        {
+          "name": "A02 Неверный логин",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Цель: Неверный логин. Вход: тело ниже; без авторизации. Ожидается: HTTP 401; код ошибки — HTTP-ориентир, в документации не задан.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"wrong\",\"password\":\"password123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          }
+        },
+        {
+          "name": "A03 Неверный пароль",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Цель: Неверный пароль. Вход: тело ниже; без авторизации. Ожидается: HTTP 401; код ошибки — HTTP-ориентир, в документации не задан.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"admin\",\"password\":\"wrong\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          }
+        },
+        {
+          "name": "A04 Пустой логин",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Цель: Пустой логин. Вход: тело ниже; без авторизации. Ожидается: HTTP 401; код ошибки — HTTP-ориентир, в документации не задан.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"\",\"password\":\"password123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          }
+        },
+        {
+          "name": "A05 Пустой пароль",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Цель: Пустой пароль. Вход: тело ниже; без авторизации. Ожидается: HTTP 401; код ошибки — HTTP-ориентир, в документации не задан.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"admin\",\"password\":\"\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "H01 Проверить доступность",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ping",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "description": "Цель: Проверить доступность. Вход: без тела; без авторизации. Ожидается: HTTP 201; по документации 201.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "Positive",
+          "item": [
+            {
+              "name": "P01 Список бронирований",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Список бронирований. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P02 Создать бронирование",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Создать бронирование. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P03 Прочитать созданную запись",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking/{{bookingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Прочитать созданную запись. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P04 Полное обновление PUT",
+              "request": {
+                "method": "PUT",
+                "url": "{{baseUrl}}/booking/{{bookingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Полное обновление PUT. Вход: тело ниже; Cookie: token={{token}}. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"BogdanUpdated_{{runTag}}\",\"lastname\":\"PryadkoUpdated_{{runTag}}\",\"totalprice\":275,\"depositpaid\":false,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Dinner\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P05 Проверить сохранение PUT",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking/{{bookingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Проверить сохранение PUT. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P06 Частичное обновление PATCH",
+              "request": {
+                "method": "PATCH",
+                "url": "{{baseUrl}}/booking/{{bookingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Частичное обновление PATCH. Вход: тело ниже; Cookie: token={{token}}. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"totalprice\":320,\"additionalneeds\":\"Late checkout\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P07 Проверить PATCH и остальные поля",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking/{{bookingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Проверить PATCH и остальные поля. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P08 Фильтр по имени",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking?firstname=BogdanUpdated_{{runTag}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Фильтр по имени. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P09 Фильтр по фамилии",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking?lastname=PryadkoUpdated_{{runTag}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Фильтр по фамилии. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P10 Фильтр checkin по равной дате",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking?checkin=2026-12-10",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Фильтр checkin по равной дате. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P11 Фильтр checkout до даты записи",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking?checkout=2026-12-19",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Фильтр checkout до даты записи. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P12 Фильтр checkout после даты записи",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking?checkout=2026-12-21",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Фильтр checkout после даты записи. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P13 Фильтры имени и дат",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking?firstname=BogdanUpdated_{{runTag}}&checkin=2026-12-09&checkout=2026-12-19",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Фильтры имени и дат. Вход: без тела; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P14 Удалить собственную запись",
+              "request": {
+                "method": "DELETE",
+                "url": "{{baseUrl}}/booking/{{bookingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  }
+                ],
+                "description": "Цель: Удалить собственную запись. Вход: без тела; Cookie: token={{token}}. Ожидается: HTTP 201; по документации 201.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "P15 Проверить удаление",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking/{{bookingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Проверить удаление. Вход: без тела; без авторизации. Ожидается: HTTP 404; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "Negative",
+          "item": [
+            {
+              "name": "N00 Создать собственную фикстуру",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Создать собственную фикстуру. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N01 PUT без токена",
+              "request": {
+                "method": "PUT",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: PUT без токена. Вход: тело ниже; без авторизации. Ожидается: HTTP 403; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N02 PATCH без токена",
+              "request": {
+                "method": "PATCH",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: PATCH без токена. Вход: тело ниже; без авторизации. Ожидается: HTTP 403; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"totalprice\":320,\"additionalneeds\":\"Late checkout\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N03 DELETE без токена",
+              "request": {
+                "method": "DELETE",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: DELETE без токена. Вход: без тела; без авторизации. Ожидается: HTTP 403; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N04 Некорректный токен",
+              "request": {
+                "method": "PUT",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token=invalid-lab-token"
+                  }
+                ],
+                "description": "Цель: Некорректный токен. Вход: тело ниже; без авторизации. Ожидается: HTTP 403; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"BogdanUpdated_{{runTag}}\",\"lastname\":\"PryadkoUpdated_{{runTag}}\",\"totalprice\":275,\"depositpaid\":false,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Dinner\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N05 GET несуществующего ID",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking/{{missingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: GET несуществующего ID. Вход: без тела; без авторизации. Ожидается: HTTP 404; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N06 PUT несуществующего ID",
+              "request": {
+                "method": "PUT",
+                "url": "{{baseUrl}}/booking/{{missingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: PUT несуществующего ID. Вход: тело ниже; Cookie: token={{token}}. Ожидается: HTTP 404; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N07 PATCH несуществующего ID",
+              "request": {
+                "method": "PATCH",
+                "url": "{{baseUrl}}/booking/{{missingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: PATCH несуществующего ID. Вход: тело ниже; Cookie: token={{token}}. Ожидается: HTTP 404; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"totalprice\":320,\"additionalneeds\":\"Late checkout\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N08 DELETE несуществующего ID",
+              "request": {
+                "method": "DELETE",
+                "url": "{{baseUrl}}/booking/{{missingId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  }
+                ],
+                "description": "Цель: DELETE несуществующего ID. Вход: без тела; Cookie: token={{token}}. Ожидается: HTTP 404; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N09 Некорректный JSON",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Некорректный JSON. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N10 Неверный тип totalprice",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Неверный тип totalprice. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":\"not-a-number\",\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N11 Неверный тип depositpaid",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Неверный тип depositpaid. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":\"not-a-boolean\",\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N12 Нет обязательных полей",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Нет обязательных полей. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N13 PUT без обязательных полей",
+              "request": {
+                "method": "PUT",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: PUT без обязательных полей. Вход: тело ниже; Cookie: token={{token}}. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N14 Неподдерживаемый метод",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Неподдерживаемый метод. Вход: тело ниже; без авторизации. Ожидается: HTTP 405; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N15 Удалить фикстуру",
+              "request": {
+                "method": "DELETE",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Cookie",
+                    "value": "token={{token}}"
+                  }
+                ],
+                "description": "Цель: Удалить фикстуру. Вход: без тела; Cookie: token={{token}}. Ожидается: HTTP 201; по документации 201.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "N16 Проверить удаление фикстуры",
+              "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/booking/{{fixtureId}}",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Проверить удаление фикстуры. Вход: без тела; без авторизации. Ожидается: HTTP 404; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "Boundary",
+          "item": [
+            {
+              "name": "B01 Пустое имя",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Пустое имя. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B02 Пустая фамилия",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Пустая фамилия. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B03 Имя 1001 символ",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Имя 1001 символ. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"{{longName}}\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B04 Фамилия 1001 символ",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Фамилия 1001 символ. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"{{longName}}\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B05 Нулевая цена",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Нулевая цена. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":0,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B06 Отрицательная цена",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Отрицательная цена. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":-1,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B07 Цена INT32_MAX",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Цена INT32_MAX. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":2147483647,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B08 Очень большая цена",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Очень большая цена. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":999999999999,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B09 Checkout раньше checkin",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Checkout раньше checkin. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-01\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B10 Невалидная дата",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Невалидная дата. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-13-40\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B11 Пустое additionalneeds",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Пустое additionalneeds. Вход: тело ниже; без авторизации. Ожидается: HTTP 200; по документации 200.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\",\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B12 Нет bookingdates",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Нет bookingdates. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B13 Нет checkin",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Нет checkin. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkout\":\"2026-12-20\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            },
+            {
+              "name": "B14 Нет checkout",
+              "request": {
+                "method": "POST",
+                "url": "{{baseUrl}}/booking",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "description": "Цель: Нет checkout. Вход: тело ниже; без авторизации. Ожидается: HTTP 400; код ошибки — HTTP-ориентир, в документации не задан.",
+                "auth": {
+                  "type": "noauth"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"firstname\":\"Bogdan\",\"lastname\":\"Pryadko\",\"totalprice\":150,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2026-12-10\"},\"additionalneeds\":\"Breakfast\"}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "protocolProfileBehavior": {
+                "disableCookies": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

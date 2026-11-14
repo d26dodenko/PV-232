@@ -1,0 +1,25 @@
+# Виртуальные окружения
+.venv/
+venv/
+env/
+
+# Кэш Python и pytest
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.uv-cache/
+.coverage
+htmlcov/
+
+# Локальные настройки IDE
+.idea/
+.vscode/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Локальные переменные окружения
+.env
+.env.*
+!.env.example

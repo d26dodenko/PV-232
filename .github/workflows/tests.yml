@@ -1,0 +1,43 @@
+name: Testing Laba-1
+
+on:
+  push:
+    branches: [pryadko_bogdan]
+    paths:
+      - 'TestingPS/Laba-1/**'
+      - '.github/workflows/tests.yml'
+  pull_request:
+    paths:
+      - 'TestingPS/Laba-1/**'
+      - '.github/workflows/tests.yml'
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: TestingPS/Laba-1
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          working-directory: TestingPS/Laba-1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: TestingPS/Laba-1/.python-version
+
+      - name: Install dependencies
+        run: uv sync --locked --dev
+
+      - name: Run tests
+        run: uv run --locked pytest -v

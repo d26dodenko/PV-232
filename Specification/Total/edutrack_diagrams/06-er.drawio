@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" pages="1">
+  <diagram id="06-er" name="ER-диаграмма базы данных">
+    <mxGraphModel dx="1280" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1420" pageHeight="1040" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_title" value="ER-диаграмма базы данных" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=28;fontStyle=1;fontColor=#18324A;" vertex="1" parent="1">
+          <mxGeometry x="56" y="32" width="1308" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="_subtitle" value="Основные таблицы PostgreSQL, ключи и отношения" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;fontFamily=Arial;fontSize=16;fontStyle=0;fontColor=#62758A;" vertex="1" parent="1">
+          <mxGeometry x="58" y="91" width="1308" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="u" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;users&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;PK id : UUID&lt;br&gt;name : VARCHAR&lt;br&gt;email : VARCHAR (UQ)&lt;br&gt;password_hash : TEXT&lt;br&gt;role : VARCHAR&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="54" y="179" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="c" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;courses&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;PK id : UUID&lt;br&gt;FK owner_id : UUID&lt;br&gt;title : VARCHAR&lt;br&gt;published : BOOLEAN&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="521" y="179" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="l" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;lessons&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;PK id : UUID&lt;br&gt;FK course_id : UUID&lt;br&gt;position : INTEGER&lt;br&gt;title : VARCHAR&lt;br&gt;content : TEXT&lt;br&gt;material_url : TEXT&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="996" y="179" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;enrollments&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;PK id : UUID&lt;br&gt;FK user_id : UUID&lt;br&gt;FK course_id : UUID&lt;br&gt;UQ (user_id, course_id)&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="54" y="425" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="s" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;submissions&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;PK id : UUID&lt;br&gt;FK user_id : UUID&lt;br&gt;FK assignment_id : UUID&lt;br&gt;content : TEXT&lt;br&gt;submitted_at : TIMESTAMPTZ&lt;br&gt;status : VARCHAR&lt;br&gt;UQ (user_id, assignment_id)&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="521" y="425" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="a" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;assignments&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;PK id : UUID&lt;br&gt;FK lesson_id : UUID&lt;br&gt;description : TEXT&lt;br&gt;deadline : TIMESTAMPTZ&lt;br&gt;max_score : INTEGER&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="996" y="425" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="p" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;lesson_progress&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;FK user_id : UUID&lt;br&gt;FK lesson_id : UUID&lt;br&gt;completed_at : TIMESTAMPTZ&lt;br&gt;PK (user_id, lesson_id)&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="54" y="674" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="g" value="&lt;div style=&quot;text-align:center;font-size:17px;font-weight:bold&quot;&gt;grades&lt;/div&gt;&lt;hr style=&quot;border:0;border-top:1px solid #E7BF76&quot;&gt;&lt;div style=&quot;font-size:13px&quot;&gt;PK id : UUID&lt;br&gt;FK submission_id : UUID (UQ)&lt;br&gt;score : INTEGER&lt;br&gt;comment : TEXT&lt;/div&gt;" style="rounded=1;arcSize=9;whiteSpace=wrap;html=1;fillColor=#FFF2DA;strokeColor=#E7BF76;strokeWidth=1.5;align=left;verticalAlign=top;fontColor=#1F3346;fontSize=14;spacing=12;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="521" y="674" width="294" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="er_u_c" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="u" target="c">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er_c_l" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c" target="l">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er_u_e" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="u" target="e">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er_c_e" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="c" target="e">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="668" y="399" />
+              <mxPoint x="434" y="399" />
+              <mxPoint x="434" y="519" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_l_a" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="l" target="a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er_a_s" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="a" target="s">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er_s_g" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="s" target="g">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="er_user_progress" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8E9AA8;strokeWidth=2;fontColor=#62758A;fontSize=12;endArrow=none;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="u" target="p">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="27" y="272" />
+              <mxPoint x="27" y="767" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_note_0" value="PK: первичный ключ. FK: внешний ключ. UQ: уникальность. Показаны основные поля; правило записи на курс проверяется бизнес-логикой." style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=14;fontColor=#62758A;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="967" width="1300" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="er_user_submission" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=none;exitX=1;exitY=0.8;entryX=0;entryY=0.4;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="u" target="s">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="390" y="347" />
+              <mxPoint x="390" y="509" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_lesson_progress" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#7994A9;strokeWidth=1.7;fontColor=#62758A;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;endArrow=none;exitX=1;exitY=0.5;entryX=0.5;entryY=1;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="l" target="p">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1340" y="284" />
+              <mxPoint x="1340" y="926" />
+              <mxPoint x="201" y="926" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_u_c_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_u_c">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_u_c_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_u_c">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_c_l_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_c_l">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_c_l_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_c_l">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_u_e_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_u_e">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_u_e_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_u_e">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_c_e_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_c_e">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_c_e_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_c_e">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_l_a_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_l_a">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_l_a_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_l_a">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_a_s_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_a_s">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_a_s_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_a_s">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_s_g_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_s_g">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_s_g_many" value="0..1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_s_g">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_user_progress_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_user_progress">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_user_progress_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_user_progress">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_user_submission_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_user_submission">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_user_submission_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_user_submission">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_lesson_progress_one" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_lesson_progress">
+          <mxGeometry as="geometry" x="-0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="er_lesson_progress_many" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;fontSize=12;fontFamily=Arial;labelBackgroundColor=#FFFFFF;" vertex="1" connectable="0" parent="er_lesson_progress">
+          <mxGeometry as="geometry" x="0.8" y="-12" relative="1">
+            <mxPoint as="offset" x="0" y="0" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
