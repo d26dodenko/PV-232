@@ -1,0 +1,16 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+  fontFamily: Arial
+  flowchart:
+    wrappingWidth: 320
+    nodeSpacing: 35
+    rankSpacing: 45
+---
+flowchart TB
+  person["Гость или администратор"] --> presentation["Представление: страницы, формы, HTTP"]
+  presentation --> business["Бизнес-логика: права и правила бронирования"]
+  business --> storage["Доступ к данным: репозитории и ORM"]
+  storage --> db[("PostgreSQL: данные и ограничения")]

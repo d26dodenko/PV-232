@@ -1,0 +1,31 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+  fontFamily: Arial
+  flowchart:
+    wrappingWidth: 320
+    nodeSpacing: 35
+    rankSpacing: 45
+---
+flowchart TB
+  client["Браузер гостя или администратора"] -->|HTTPS| proxy["Веб-сервер"]
+  subgraph app["Одно приложение Django"]
+    ui["Представления и HTML-шаблоны"]
+    users["Учётные записи"]
+    catalog["Каталог номеров"]
+    booking["Бронирование и отмена"]
+    audit["Журнал действий"]
+    ui --> users
+    ui --> catalog
+    ui --> booking
+    booking --> catalog
+    booking --> audit
+    catalog --> audit
+  end
+  proxy --> app
+  users --> db[("Общая PostgreSQL")]
+  catalog --> db
+  booking --> db
+  audit --> db

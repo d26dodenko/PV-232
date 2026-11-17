@@ -1,0 +1,17 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+  fontFamily: Arial
+  flowchart:
+    wrappingWidth: 320
+    nodeSpacing: 35
+    rankSpacing: 45
+---
+flowchart TB
+  browser["Браузер"] -->|HTTPS| web["Веб-приложение и API-шлюз"]
+  web -->|Проверка сеанса| accounts["Сервис учётных записей"]
+  web -->|Каталог, брони и журнал| hotel["Сервис гостиницы"]
+  accounts --> usersdb[("БД пользователей и сеансов")]
+  hotel --> hoteldb[("БД номеров, броней и журнала")]
