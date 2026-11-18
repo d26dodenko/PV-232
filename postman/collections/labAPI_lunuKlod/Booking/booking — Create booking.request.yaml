@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/booking"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+        "firstname": "Jim",
+        "lastname": "Brown",
+        "totalprice": 111,
+        "depositpaid": true,
+        "bookingdates": {
+            "checkin": "2025-01-01",
+            "checkout": "2025-01-05"
+        },
+        "additionalneeds": "Breakfast"
+    }
+order: 3000

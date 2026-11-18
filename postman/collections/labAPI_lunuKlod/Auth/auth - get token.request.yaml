@@ -1,0 +1,30 @@
+$kind: http-request
+url: "{{baseUrl}}/auth"
+method: POST
+headers:
+  - key: Content-Type
+    value: "application/json "
+    disabled: false
+    description: |-
+      Цель: получение токена авторизации для защищённых эндпоинтов (PUT, PATCH, DELETE).
+
+      Входные данные:
+      - username: "admin"
+      - password: "password123"
+
+      Ожидаемый результат:
+      - Код ответа: 200 OK
+      - Тело ответа: JSON с полем "token" (строка)
+      - Токен сохраняется в переменную окружения {{token}} (см. вкладку Tests, шаг 3)
+
+      Примечание:
+      - Restful-Booker использует cookie-based токены. В ответе приходит поле "token",
+        но фактически для авторизации также используется cookie, полученный из /auth.
+body:
+  type: json
+  content: |-
+    {
+        "username": "admin",
+        "password": "password123"
+    }
+order: 1000

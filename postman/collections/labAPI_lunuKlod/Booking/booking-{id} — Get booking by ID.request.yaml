@@ -1,0 +1,7 @@
+$kind: http-request
+name: booking/{id} — Get booking by ID
+url: "{{baseUrl}}/booking/{{bookingId}}"
+method: GET
+headers:
+  Accept: application/json
+order: 2000

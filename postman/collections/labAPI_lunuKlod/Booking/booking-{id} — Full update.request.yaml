@@ -1,0 +1,23 @@
+$kind: http-request
+name: booking/{id} — Full update
+url: "{{baseUrl}}/booking/{{bookingId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+  Accept: application/json
+  Cookie: token={{token}}
+body:
+  type: json
+  content: |-
+    {
+        "firstname": "James",
+        "lastname": "Brown",
+        "totalprice": 222,
+        "depositpaid": false,
+        "bookingdates": {
+            "checkin": "2025-02-01",
+            "checkout": "2025-02-10"
+        },
+        "additionalneeds": "Lunch"
+    }
+order: 4000

@@ -1,0 +1,7 @@
+$kind: http-request
+name: booking/{id} — Delete booking
+url: "{{baseUrl}}/booking/{{bookingId}}"
+method: DELETE
+headers:
+  Cookie: token={{token}}
+order: 5000

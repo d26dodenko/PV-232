@@ -1,0 +1,8 @@
+name: labAPI_lunuKlod
+values:
+  - key: baseUrl
+    value: ''
+  - key: token
+    value: ''
+  - key: bookingId
+    value: ''
