@@ -5,6 +5,12 @@ on:
     branches: [chernobrovenko_alex, main]
   pull_request:
     branches: [main]
+  workflow_call:
+    inputs:
+      demo:
+        description: Quality gate demonstration
+        type: string
+        default: none
   workflow_dispatch:
     inputs:
       demo:
@@ -23,6 +29,7 @@ defaults:
 env:
   LAB3_DEMO: none
   PYTHONUTF8: '1'
+  ARTIFACT_PREFIX: ${{ inputs.demo && inputs.demo != 'none' && format('lab3-{0}', inputs.demo) || 'lab3' }}
 
 jobs:
   unit:
@@ -48,7 +55,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: lab3-unit-report
+          name: ${{ env.ARTIFACT_PREFIX }}-unit-report
           path: TestingPS/lab3/reports/unit.xml
           retention-days: 30
 
@@ -79,7 +86,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: lab3-security-report
+          name: ${{ env.ARTIFACT_PREFIX }}-security-report
           path: TestingPS/lab3/reports/bandit.txt
           retention-days: 30
 
@@ -99,7 +106,7 @@ jobs:
       - run: python -m build --wheel --no-isolation
       - uses: actions/upload-artifact@v7
         with:
-          name: lab3-build
+          name: ${{ env.ARTIFACT_PREFIX }}-build
           path: TestingPS/lab3/dist/*.whl
           if-no-files-found: error
           retention-days: 30
@@ -119,7 +126,7 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - uses: actions/download-artifact@v8
         with:
-          name: lab3-build
+          name: ${{ env.ARTIFACT_PREFIX }}-build
           path: TestingPS/lab3/dist
       - run: python -m pip install --no-deps dist/*.whl
       - name: Prepare coverage demonstration
@@ -136,7 +143,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: lab3-integration-coverage
+          name: ${{ env.ARTIFACT_PREFIX }}-integration-coverage
           path: TestingPS/lab3/reports/
           retention-days: 30
 
@@ -155,7 +162,7 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - uses: actions/download-artifact@v8
         with:
-          name: lab3-build
+          name: ${{ env.ARTIFACT_PREFIX }}-build
           path: TestingPS/lab3/dist
       - run: python -m pip install --no-deps dist/*.whl
       - run: python -m playwright install --with-deps --only-shell chromium
@@ -169,7 +176,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: lab3-playwright-report
+          name: ${{ env.ARTIFACT_PREFIX }}-playwright-report
           path: |
             TestingPS/lab3/reports/
             TestingPS/lab3/test-results/
@@ -199,11 +206,11 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with:
-          name: lab3-build
+          name: ${{ env.ARTIFACT_PREFIX }}-build
           path: release
       - uses: actions/upload-artifact@v7
         with:
-          name: lab3-release-package
+          name: ${{ env.ARTIFACT_PREFIX }}-release-package
           path: release/*.whl
           if-no-files-found: error
           retention-days: 30

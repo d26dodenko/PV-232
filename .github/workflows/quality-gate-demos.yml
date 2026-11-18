@@ -1,0 +1,21 @@
+name: Quality gate demonstrations - Chernobrovenko
+run-name: 'Intentional failures: unit, coverage, security'
+
+on:
+  push:
+    branches: [chernobrovenko_alex]
+    paths: [.github/workflows/quality-gate-demos.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  demonstrate:
+    name: Failure - ${{ matrix.demo }}
+    strategy:
+      fail-fast: false
+      matrix:
+        demo: [unit, coverage, security]
+    uses: ./.github/workflows/ci.yml
+    with:
+      demo: ${{ matrix.demo }}
