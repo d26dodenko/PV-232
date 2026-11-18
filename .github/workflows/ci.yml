@@ -1,0 +1,209 @@
+name: Testing Lab 3 - Chernobrovenko
+
+on:
+  push:
+    branches: [chernobrovenko_alex, main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      demo:
+        description: Quality gate demonstration
+        type: choice
+        default: none
+        options: [none, unit, coverage, security, e2e]
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: TestingPS/lab3
+
+env:
+  LAB3_DEMO: none
+  PYTHONUTF8: '1'
+
+jobs:
+  unit:
+    name: Lab 3 / unit-lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: TestingPS/lab3/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install --no-build-isolation --no-deps -e .
+      - run: ruff check . && ruff format --check .
+      - name: Prepare unit demonstration
+        env:
+          LAB3_DEMO: ${{ inputs.demo || env.LAB3_DEMO }}
+        run: python scripts/demo.py unit
+      - name: Unit tests
+        run: python -m pytest tests/unit -q --junitxml=reports/unit.xml
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lab3-unit-report
+          path: TestingPS/lab3/reports/unit.xml
+          retention-days: 30
+
+  security:
+    name: Lab 3 / security
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: TestingPS/lab3/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install --no-build-isolation --no-deps -e .
+      - name: Prepare security demonstration
+        env:
+          LAB3_DEMO: ${{ inputs.demo || env.LAB3_DEMO }}
+        run: python scripts/demo.py security
+      - name: Bandit HIGH gate
+        run: |
+          mkdir -p reports
+          bandit -r src/bookshop --severity-level high -f txt -o reports/bandit.txt
+      - name: Security findings
+        if: always()
+        run: cat reports/bandit.txt
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lab3-security-report
+          path: TestingPS/lab3/reports/bandit.txt
+          retention-days: 30
+
+  build:
+    name: Lab 3 / build
+    needs: [unit, security]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: TestingPS/lab3/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - run: python -m build --wheel --no-isolation
+      - uses: actions/upload-artifact@v7
+        with:
+          name: lab3-build
+          path: TestingPS/lab3/dist/*.whl
+          if-no-files-found: error
+          retention-days: 30
+
+  integration:
+    name: Lab 3 / integration-coverage
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: TestingPS/lab3/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v8
+        with:
+          name: lab3-build
+          path: TestingPS/lab3/dist
+      - run: python -m pip install --no-deps dist/*.whl
+      - name: Prepare coverage demonstration
+        env:
+          LAB3_DEMO: ${{ inputs.demo || env.LAB3_DEMO }}
+        run: python scripts/demo.py coverage
+      - name: Integration tests and whole-package coverage
+        run: >-
+          python -m pytest tests/unit tests/integration -q
+          --cov=bookshop --cov-branch --cov-fail-under=80
+          --cov-report=term-missing --cov-report=html:reports/coverage
+          --cov-report=xml:reports/coverage.xml --cov-report=json:reports/coverage.json
+          --junitxml=reports/integration.xml
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lab3-integration-coverage
+          path: TestingPS/lab3/reports/
+          retention-days: 30
+
+  e2e:
+    name: Lab 3 / e2e
+    needs: integration
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: TestingPS/lab3/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v8
+        with:
+          name: lab3-build
+          path: TestingPS/lab3/dist
+      - run: python -m pip install --no-deps dist/*.whl
+      - run: python -m playwright install --with-deps --only-shell chromium
+      - name: Browser tests
+        env:
+          LAB3_DEMO: ${{ inputs.demo || env.LAB3_DEMO }}
+        run: >-
+          python -m pytest tests/e2e -q --browser chromium
+          --tracing retain-on-failure --screenshot only-on-failure
+          --html=reports/e2e.html --self-contained-html --junitxml=reports/e2e.xml
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lab3-playwright-report
+          path: |
+            TestingPS/lab3/reports/
+            TestingPS/lab3/test-results/
+          retention-days: 30
+
+  quality-gate:
+    name: quality-gate
+    needs: [unit, security, build, integration, e2e]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Require all stages to pass
+        env:
+          JOB_RESULTS: ${{ toJSON(needs) }}
+        run: python scripts/quality_gate.py
+
+  release:
+    name: Lab 3 / release
+    needs: [quality-gate, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: lab3-build
+          path: release
+      - uses: actions/upload-artifact@v7
+        with:
+          name: lab3-release-package
+          path: release/*.whl
+          if-no-files-found: error
+          retention-days: 30
