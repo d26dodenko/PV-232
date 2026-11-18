@@ -99,12 +99,4 @@
 
 **Дальнейшие шаги:** Для успешного прохождения всей цепочки тестов (включая удаление и получение 404) необходимо добавить JavaScript-скрипты во вкладку Tests для автоматического сохранения `token` и `bookingId` в переменные окружения, а также использовать заголовок `Cookie: token={{token}}` для авторизованных запросов.
 
----
 
-## 7. Инструкция по развертыванию (Git)
-
-```bash
-# Сохраните этот отчет как README.md
-git add README.md postman/ reports/
-git commit -m "Lab 3: API testing run results, discrepancy analysis and bug reports"
-git push -u origin lab3-api-testing
