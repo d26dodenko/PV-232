@@ -1,0 +1,11 @@
+.venv/
+instance/
+reports/
+test-results/
+dist/
+build/
+*.egg-info/
+.ruff_cache/
+src/bookshop/coverage_probe.py
+src/bookshop/security_probe.py
+tests/unit/test_failure_probe.py

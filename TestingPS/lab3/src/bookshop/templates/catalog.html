@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+  <p class="eyebrow">Книги для любопытных</p>
+  <h1>Новая глава начинается здесь</h1>
+  <p class="intro">Программирование, тестирование и архитектура — от первых шагов к практике.</p>
+  <form class="search" method="get">
+    <label for="q">Поиск по названию или автору</label>
+    <div class="row">
+      <input id="q" name="q" value="{{ query }}" placeholder="Например, Python">
+      <button type="submit">Найти</button>
+    </div>
+  </form>
+  <section class="catalog" aria-label="Книги">
+    {% for product in products %}
+      <article aria-label="{{ product.title }}">
+        <div class="cover cover-{{ product.id }}" aria-hidden="true">{{ product.title }}</div>
+        <h2>{{ product.title }}</h2>
+        <p class="muted">{{ product.author }}</p>
+        <p class="price">{{ product.price | money }}</p>
+        <p>В наличии: {{ product.stock }}</p>
+        <form method="post" action="{{ url_for('add_to_cart', product_id=product.id) }}">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" {% if product.stock == 0 %}disabled{% endif %}>В корзину</button>
+        </form>
+      </article>
+    {% else %}
+      <p role="status">Книги не найдены.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

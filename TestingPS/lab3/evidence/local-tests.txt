@@ -1,0 +1,22 @@
+$ /private/tmp/testing-lab3.QctCTtNS/venv/bin/python -m pytest tests/unit tests/integration -q --cov=bookshop --cov-branch --cov-fail-under=80 --cov-report=term-missing --cov-report=html:reports/coverage --cov-report=xml:reports/coverage.xml --cov-report=json:reports/coverage.json --junitxml=reports/integration.xml
+......................................................                   [100%]
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.12.12-final-0 _______________
+
+Name                                                                                          Stmts   Miss Branch BrPart   Cover   Missing
+------------------------------------------------------------------------------------------------------------------------------------------
+/private/tmp/testing-lab3.QctCTtNS/venv/lib/python3.12/site-packages/bookshop/__init__.py         2      0      0      0 100.00%
+/private/tmp/testing-lab3.QctCTtNS/venv/lib/python3.12/site-packages/bookshop/__main__.py         6      6      2      0   0.00%   1-11
+/private/tmp/testing-lab3.QctCTtNS/venv/lib/python3.12/site-packages/bookshop/domain.py          45      0     10      0 100.00%
+/private/tmp/testing-lab3.QctCTtNS/venv/lib/python3.12/site-packages/bookshop/repository.py      70      0     10      0 100.00%
+/private/tmp/testing-lab3.QctCTtNS/venv/lib/python3.12/site-packages/bookshop/service.py         22      0      2      0 100.00%
+/private/tmp/testing-lab3.QctCTtNS/venv/lib/python3.12/site-packages/bookshop/web.py            123      0     22      1  99.31%   25->27
+------------------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                           268      6     46      1  97.13%
+Coverage HTML written to dir reports/coverage
+Coverage XML written to file reports/coverage.xml
+Coverage JSON written to file reports/coverage.json
+Required test coverage of 80% reached. Total coverage: 97.13%
+54 passed in 7.17s
+
+Exit code: 0

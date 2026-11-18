@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="panel">
+    <h1>Оформление заказа</h1>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    {% if items %}
+      <p>К оплате при получении: <strong>{{ total | money }}</strong></p>
+      <form method="post">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <label for="name">Получатель</label>
+        <input id="name" name="name" value="{{ user.name }}" autocomplete="name" minlength="2" maxlength="60" required>
+        <label for="address">Адрес доставки</label>
+        <textarea id="address" name="address" autocomplete="street-address" minlength="5" maxlength="200" required></textarea>
+        <button type="submit">Подтвердить заказ</button>
+      </form>
+    {% else %}
+      <p>Добавьте книги в корзину перед оформлением.</p>
+    {% endif %}
+  </section>
+{% endblock %}

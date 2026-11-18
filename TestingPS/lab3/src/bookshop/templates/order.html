@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="panel">
+    <p class="eyebrow">Спасибо за покупку</p>
+    <h1>Заказ оформлен</h1>
+    <p>Номер заказа: <strong>{{ order.id }}</strong></p>
+    <ul>{% for item in items %}<li>{{ item.title }} — {{ item.quantity }} шт.</li>{% endfor %}</ul>
+    <p>Получатель: {{ order.name }}</p>
+    <p>Адрес: {{ order.address }}</p>
+    <p class="total" data-testid="order-total">Итого: {{ order.total | money }}</p>
+    <p>Оплата при получении. Доставка бесплатно.</p>
+    <a href="{{ url_for('catalog') }}">Вернуться в каталог</a>
+  </section>
+{% endblock %}

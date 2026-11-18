@@ -1,0 +1,20 @@
+$ /private/tmp/testing-lab3.QctCTtNS/venv/bin/python -m pytest tests/unit -q --junitxml=reports/unit-failure.xml
+....................................F                                    [100%]
+=================================== FAILURES ===================================
+___________________________ test_quality_gate_probe ____________________________
+
+    def test_quality_gate_probe():
+>     assert money(129000) == "1 290,01 ₽"
+E     AssertionError: assert '1 290,00 ₽' == '1 290,01 ₽'
+E
+E       - 1 290,01 ₽
+E       ?        ^
+E       + 1 290,00 ₽
+E       ?        ^
+
+tests/unit/test_failure_probe.py:4: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_failure_probe.py::test_quality_gate_probe - AssertionE...
+1 failed, 36 passed in 0.09s
+
+Exit code: 1

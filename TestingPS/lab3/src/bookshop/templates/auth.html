@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="panel">
+    <h1>{{ 'Регистрация' if registration else 'Вход' }}</h1>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <form method="post">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      {% if registration %}
+        <label for="name">Имя</label>
+        <input id="name" name="name" autocomplete="name" minlength="2" maxlength="60" required>
+      {% endif %}
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" maxlength="120" required>
+      <label for="password">Пароль</label>
+      <input id="password" name="password" type="password" autocomplete="{{ 'new-password' if registration else 'current-password' }}" {% if registration %}minlength="8" maxlength="128"{% endif %} required>
+      <button type="submit">{{ 'Зарегистрироваться' if registration else 'Войти' }}</button>
+    </form>
+  </section>
+{% endblock %}

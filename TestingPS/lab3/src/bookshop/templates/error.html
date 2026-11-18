@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Не удалось выполнить действие</h1>
+  <p class="error" role="alert">{{ message }}</p>
+  <a href="{{ url_for('catalog') }}">Вернуться в каталог</a>
+{% endblock %}
