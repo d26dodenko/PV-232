@@ -1,0 +1,37 @@
+GitHub Actions — coverage
+Источник: https://github.com/d26dodenko/PV-232/actions/runs/44207159120/job/134476286767
+Коммит: 9b5594c701609362160f94ff0d2ae243814ab549
+
+Статусы заданий GitHub Actions:
+Failure - coverage / Lab 3 / security: success
+Failure - coverage / Lab 3 / unit-lint: success
+Failure - coverage / Lab 3 / build: success
+Failure - coverage / Lab 3 / integration-coverage: failure
+Failure - coverage / quality-gate: failure
+Failure - coverage / Lab 3 / e2e: skipped
+Failure - coverage / Lab 3 / release: skipped
+
+Фрагмент журнала выполнения (UTC):
+2026-11-18T00:22:37.3752947Z ......................................................
+2026-11-18T00:22:37.3753558Z ERROR: Coverage failure: total of 73.32 is less than fail-under=80.00
+2026-11-18T00:22:37.4121314Z                                                                          [100%]
+2026-11-18T00:22:37.4121715Z ================================ tests coverage ================================
+2026-11-18T00:22:37.4122081Z _______________ coverage: platform linux, python 3.12.16-final-0 _______________
+2026-11-18T00:22:37.4122324Z
+2026-11-18T00:22:37.4122555Z Name                                                                                              Stmts   Miss Branch BrPart   Cover   Missing
+2026-11-18T00:22:37.4123066Z ----------------------------------------------------------------------------------------------------------------------------------------------
+2026-11-18T00:22:37.4123722Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/bookshop/__init__.py             2      0      0      0 100.00%
+2026-11-18T00:22:37.4124371Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/bookshop/__main__.py             6      6      2      0   0.00%   1-11
+2026-11-18T00:22:37.4125050Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/bookshop/coverage_probe.py     102    102      0      0   0.00%   1-102
+2026-11-18T00:22:37.4125716Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/bookshop/domain.py              45      0     10      0 100.00%
+2026-11-18T00:22:37.4126368Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/bookshop/repository.py          70      0     10      0 100.00%
+2026-11-18T00:22:37.4126998Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/bookshop/service.py             22      0      2      0 100.00%
+2026-11-18T00:22:37.4127647Z /opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/bookshop/web.py                123      0     22      1  99.31%   25->27
+2026-11-18T00:22:37.4128561Z ----------------------------------------------------------------------------------------------------------------------------------------------
+2026-11-18T00:22:37.4129048Z TOTAL                                                                                               370    108     46      1  73.32%
+2026-11-18T00:22:37.4129389Z Coverage HTML written to dir reports/coverage
+2026-11-18T00:22:37.4129672Z Coverage XML written to file reports/coverage.xml
+2026-11-18T00:22:37.4129958Z Coverage JSON written to file reports/coverage.json
+2026-11-18T00:22:37.4130742Z FAIL Required test coverage of 80% not reached. Total coverage: 73.32%
+2026-11-18T00:22:37.4131053Z 54 passed in 4.04s
+2026-11-18T00:22:37.4731195Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,47 @@
+GitHub Actions — security
+Источник: https://github.com/d26dodenko/PV-232/actions/runs/44207159120/job/134475948695
+Коммит: 9b5594c701609362160f94ff0d2ae243814ab549
+
+Статусы заданий GitHub Actions:
+Failure - security / Lab 3 / security: failure
+Failure - security / Lab 3 / unit-lint: success
+Failure - security / quality-gate: failure
+Failure - security / Lab 3 / build: skipped
+Failure - security / Lab 3 / integration-coverage: skipped
+Failure - security / Lab 3 / e2e: skipped
+Failure - security / Lab 3 / release: skipped
+
+Фрагмент журнала выполнения (UTC):
+2026-11-18T00:22:01.0048978Z Run started:2026-11-18 00:22:00.969378+00:00
+2026-11-18T00:22:01.0049226Z
+2026-11-18T00:22:01.0049313Z Test results:
+2026-11-18T00:22:01.0049718Z >> Issue: [B602:subprocess_popen_with_shell_equals_true] subprocess call with shell=True identified, security issue.
+2026-11-18T00:22:01.0050342Z    Severity: High   Confidence: High
+2026-11-18T00:22:01.0050804Z    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+2026-11-18T00:22:01.0051432Z    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b602_subprocess_popen_with_shell_equals_true.html
+2026-11-18T00:22:01.0052239Z    Location: src/bookshop/security_probe.py:4:9
+2026-11-18T00:22:01.0052585Z 3	def security_probe(command):
+2026-11-18T00:22:01.0052887Z 4	  return subprocess.run(command, shell=True, check=True)
+2026-11-18T00:22:01.0053155Z
+2026-11-18T00:22:01.0053261Z --------------------------------------------------
+2026-11-18T00:22:01.0053473Z
+2026-11-18T00:22:01.0053583Z Code scanned:
+2026-11-18T00:22:01.0053815Z 	Total lines of code: 368
+2026-11-18T00:22:01.0054063Z 	Total lines skipped (#nosec): 0
+2026-11-18T00:22:01.0054431Z 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+2026-11-18T00:22:01.0054757Z
+2026-11-18T00:22:01.0054860Z Run metrics:
+2026-11-18T00:22:01.0055080Z 	Total issues (by severity):
+2026-11-18T00:22:01.0055387Z 		Undefined: 0
+2026-11-18T00:22:01.0055589Z 		Low: 1
+2026-11-18T00:22:01.0055830Z 		Medium: 0
+2026-11-18T00:22:01.0056036Z 		High: 1
+2026-11-18T00:22:01.0056248Z 	Total issues (by confidence):
+2026-11-18T00:22:01.0056497Z 		Undefined: 0
+2026-11-18T00:22:01.0056719Z 		Low: 0
+2026-11-18T00:22:01.0056933Z 		Medium: 0
+2026-11-18T00:22:01.0057139Z 		High: 2
+2026-11-18T00:22:01.0057342Z Files skipped (0):
+
+Завершение шага Bandit HIGH gate:
+2026-11-18T00:22:00.9927923Z ##[error]Process completed with exit code 1.
