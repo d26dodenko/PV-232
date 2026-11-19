@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="790" viewBox="0 0 1280 790" role="img" aria-labelledby="title">
+<title id="title">Микросервисная архитектура · рассматриваемый вариант</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#486078"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<g font-family="Arial, sans-serif" fill="#203448">
+<text x="640.0" y="38" font-size="25" font-weight="700" text-anchor="middle">Микросервисная архитектура · рассматриваемый вариант</text>
+<rect x="440" y="73" width="400" height="78" rx="10" fill="#eef4fb" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="640.0" y="103" font-size="20" font-weight="700" text-anchor="middle">Браузер · React</text>
+<text x="640.0" y="131" font-size="17" font-weight="400" text-anchor="middle">Чтение, авторский кабинет, статус импорта</text>
+<rect x="440" y="205" width="400" height="78" rx="10" fill="#eef4fb" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="640.0" y="235" font-size="20" font-weight="700" text-anchor="middle">API Gateway</text>
+<text x="640.0" y="263" font-size="17" font-weight="400" text-anchor="middle">Единый вход и маршрутизация</text>
+<path d="M640,151 L640,205" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="710" y="182" font-size="16" font-weight="400" text-anchor="middle">HTTPS</text>
+<rect x="35" y="360" width="360" height="132" rx="10" fill="#eef4fb" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="215.0" y="390" font-size="20" font-weight="700" text-anchor="middle">Сервис учётных записей</text>
+<text x="215.0" y="418" font-size="17" font-weight="400" text-anchor="middle">Регистрация и аутентификация</text>
+<text x="215.0" y="442" font-size="17" font-weight="400" text-anchor="middle">Сессии и проверка пользователя</text>
+<rect x="460" y="360" width="360" height="132" rx="10" fill="#eef4fb" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="640.0" y="390" font-size="20" font-weight="700" text-anchor="middle">Сервис публикаций</text>
+<text x="640.0" y="418" font-size="17" font-weight="400" text-anchor="middle">Книги, главы, права владельца</text>
+<text x="640.0" y="442" font-size="17" font-weight="400" text-anchor="middle">Атомарное сохранение импорта</text>
+<rect x="885" y="360" width="360" height="132" rx="10" fill="#eef4fb" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="1065.0" y="390" font-size="20" font-weight="700" text-anchor="middle">Сервис импорта</text>
+<text x="1065.0" y="418" font-size="17" font-weight="400" text-anchor="middle">Задания, очередь и исполнитель</text>
+<text x="1065.0" y="442" font-size="17" font-weight="400" text-anchor="middle">Проверка и разбор EPUB</text>
+<path d="M500,283 L500,317 L215,317 L215,360" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M640,283 L640,360" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="720" y="330" font-size="16" font-weight="400" text-anchor="middle">Запросы API</text>
+<path d="M780,283 L780,317 L1065,317 L1065,360" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M950,492 L950,545 L750,545 L750,492" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="845" y="573" font-size="16" font-weight="400" text-anchor="middle">Пакет глав + ключ импорта</text>
+<rect x="35" y="640" width="360" height="94" rx="10" fill="#eef7f1" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="215.0" y="670" font-size="20" font-weight="700" text-anchor="middle">БД учётных записей</text>
+<text x="215.0" y="698" font-size="17" font-weight="400" text-anchor="middle">Пользователи и сессии</text>
+<rect x="460" y="640" width="360" height="94" rx="10" fill="#eef7f1" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="640.0" y="670" font-size="20" font-weight="700" text-anchor="middle">БД публикаций</text>
+<text x="640.0" y="698" font-size="17" font-weight="400" text-anchor="middle">Книги, главы и ключи импорта</text>
+<rect x="885" y="640" width="360" height="94" rx="10" fill="#eef7f1" stroke="#9db3c8" stroke-width="1.5"/>
+<text x="1065.0" y="670" font-size="20" font-weight="700" text-anchor="middle">Хранилище импорта</text>
+<text x="1065.0" y="698" font-size="17" font-weight="400" text-anchor="middle">Задания и временные EPUB</text>
+<path d="M215,492 L215,640" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M580,492 L580,640" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1120,492 L1120,640" fill="none" stroke="#486078" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="640" y="772" font-size="17" font-weight="400" text-anchor="middle">У каждого сервиса свои данные. Взаимодействие между сервисами — через API.</text>
+</g></svg>

@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1240" viewBox="0 0 1800 1240" role="img" aria-labelledby="title desc">
+<title id="title">Kanban-доска проекта «Переплёт»: 24 задачи</title>
+<desc id="desc">План на 12 ноября 2026 года: Backlog — 6 задач, To Do — 4, In Progress — 0, Code Review — 10, Testing — 0, Done — 4. Реализованные функции ожидают ревью. Испытания ещё не выполнены.</desc>
+<rect width="1800" height="1240" fill="#ffffff"/>
+<g font-family="Arial, sans-serif" fill="#203448">
+<text x="30" y="44" font-size="30" font-weight="700" fill="#203448">Переплёт · доска задач</text>
+<text x="30" y="78" font-size="20" font-weight="400" fill="#526477">Проектирование, разработка и проверка системы · 24 задачи</text>
+<rect x="30" y="108" width="275" height="1078" rx="10" fill="#eef1f5" stroke="none"/>
+<text x="45" y="143" font-size="23" font-weight="700" fill="#526477">Backlog</text>
+<text x="269" y="143" font-size="21" font-weight="700" fill="#526477">6</text>
+<rect x="40" y="162" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="52" y="186" font-size="16" font-weight="700" fill="#526477">T19</text>
+<text x="173" y="186" font-size="16" font-weight="400" fill="#526477">Q1</text>
+<text x="52" y="213" font-size="19" font-weight="400" fill="#203448">Проверки API и</text>
+<text x="52" y="237" font-size="19" font-weight="400" fill="#203448">интерфейса</text>
+<rect x="40" y="262" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="52" y="286" font-size="16" font-weight="700" fill="#526477">T20</text>
+<text x="173" y="286" font-size="16" font-weight="400" fill="#526477">Q1</text>
+<text x="52" y="313" font-size="19" font-weight="400" fill="#203448">Защищённое размещение</text>
+<rect x="40" y="362" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="52" y="386" font-size="16" font-weight="700" fill="#526477">T21</text>
+<text x="173" y="386" font-size="16" font-weight="400" fill="#526477">Q1</text>
+<text x="52" y="413" font-size="19" font-weight="400" fill="#203448">Копии и восстановление</text>
+<rect x="40" y="462" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="52" y="486" font-size="16" font-weight="700" fill="#526477">T22</text>
+<text x="173" y="486" font-size="16" font-weight="400" fill="#526477">Q1</text>
+<text x="52" y="513" font-size="19" font-weight="400" fill="#203448">Нагрузка и</text>
+<text x="52" y="537" font-size="19" font-weight="400" fill="#203448">масштабирование</text>
+<rect x="40" y="562" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="52" y="586" font-size="16" font-weight="700" fill="#526477">T23</text>
+<text x="173" y="586" font-size="16" font-weight="400" fill="#526477">A1, Q1</text>
+<text x="52" y="613" font-size="19" font-weight="400" fill="#203448">Подготовить руководства</text>
+<rect x="40" y="662" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="52" y="686" font-size="16" font-weight="700" fill="#526477">T24</text>
+<text x="173" y="686" font-size="16" font-weight="400" fill="#526477">A1</text>
+<text x="52" y="713" font-size="19" font-weight="400" fill="#203448">Итоговая приёмка</text>
+<rect x="323" y="108" width="275" height="1078" rx="10" fill="#edf4fd" stroke="none"/>
+<text x="338" y="143" font-size="23" font-weight="700" fill="#3269a1">To Do</text>
+<text x="562" y="143" font-size="21" font-weight="700" fill="#3269a1">4</text>
+<rect x="333" y="162" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="345" y="186" font-size="16" font-weight="700" fill="#3269a1">T15</text>
+<text x="466" y="186" font-size="16" font-weight="400" fill="#526477">A1, B1</text>
+<text x="345" y="213" font-size="19" font-weight="400" fill="#203448">Описать контракт API</text>
+<rect x="333" y="262" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="345" y="286" font-size="16" font-weight="700" fill="#3269a1">T16</text>
+<text x="466" y="286" font-size="16" font-weight="400" fill="#526477">Q1</text>
+<text x="345" y="313" font-size="19" font-weight="400" fill="#203448">Контрольные данные</text>
+<rect x="333" y="362" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="345" y="386" font-size="16" font-weight="700" fill="#3269a1">T17</text>
+<text x="466" y="386" font-size="16" font-weight="400" fill="#526477">Q1</text>
+<text x="345" y="413" font-size="19" font-weight="400" fill="#203448">Испытательный стенд</text>
+<rect x="333" y="462" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="345" y="486" font-size="16" font-weight="700" fill="#3269a1">T18</text>
+<text x="466" y="486" font-size="16" font-weight="400" fill="#526477">B1</text>
+<text x="345" y="513" font-size="19" font-weight="400" fill="#203448">Сервисный слой</text>
+<rect x="616" y="108" width="275" height="1078" rx="10" fill="#fff5df" stroke="none"/>
+<text x="631" y="143" font-size="23" font-weight="700" fill="#926416">In Progress</text>
+<text x="855" y="143" font-size="21" font-weight="700" fill="#926416">0</text>
+<text x="639" y="196" font-size="19" font-weight="400" fill="#687b8e">Задач пока нет</text>
+<rect x="909" y="108" width="275" height="1078" rx="10" fill="#f1eefb" stroke="none"/>
+<text x="924" y="143" font-size="23" font-weight="700" fill="#6e52a3">Code Review</text>
+<text x="1148" y="143" font-size="21" font-weight="700" fill="#6e52a3">10</text>
+<rect x="919" y="162" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="186" font-size="16" font-weight="700" fill="#6e52a3">T05</text>
+<text x="1052" y="186" font-size="16" font-weight="400" fill="#526477">B1</text>
+<text x="931" y="213" font-size="19" font-weight="400" fill="#203448">Модели данных</text>
+<text x="931" y="237" font-size="19" font-weight="400" fill="#203448">и миграции</text>
+<rect x="919" y="262" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="286" font-size="16" font-weight="700" fill="#6e52a3">T06</text>
+<text x="1052" y="286" font-size="16" font-weight="400" fill="#526477">B1, F1</text>
+<text x="931" y="313" font-size="19" font-weight="400" fill="#203448">Регистрация, вход</text>
+<text x="931" y="337" font-size="19" font-weight="400" fill="#203448">и выход</text>
+<rect x="919" y="362" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="386" font-size="16" font-weight="700" fill="#6e52a3">T07</text>
+<text x="1052" y="386" font-size="16" font-weight="400" fill="#526477">B1</text>
+<text x="931" y="413" font-size="19" font-weight="400" fill="#203448">Права владельца</text>
+<rect x="919" y="462" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="486" font-size="16" font-weight="700" fill="#6e52a3">T08</text>
+<text x="1052" y="486" font-size="16" font-weight="400" fill="#526477">F1, B1</text>
+<text x="931" y="513" font-size="19" font-weight="400" fill="#203448">Каталог, карточка и</text>
+<text x="931" y="537" font-size="19" font-weight="400" fill="#203448">читалка</text>
+<rect x="919" y="562" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="586" font-size="16" font-weight="700" fill="#6e52a3">T09</text>
+<text x="1052" y="586" font-size="16" font-weight="400" fill="#526477">B1</text>
+<text x="931" y="613" font-size="19" font-weight="400" fill="#203448">API книг</text>
+<rect x="919" y="662" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="686" font-size="16" font-weight="700" fill="#6e52a3">T10</text>
+<text x="1052" y="686" font-size="16" font-weight="400" fill="#526477">B1</text>
+<text x="931" y="713" font-size="19" font-weight="400" fill="#203448">API глав</text>
+<rect x="919" y="762" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="786" font-size="16" font-weight="700" fill="#6e52a3">T11</text>
+<text x="1052" y="786" font-size="16" font-weight="400" fill="#526477">F1</text>
+<text x="931" y="813" font-size="19" font-weight="400" fill="#203448">Кабинет и редакторы</text>
+<rect x="919" y="862" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="886" font-size="16" font-weight="700" fill="#6e52a3">T12</text>
+<text x="1052" y="886" font-size="16" font-weight="400" fill="#526477">B1</text>
+<text x="931" y="913" font-size="19" font-weight="400" fill="#203448">Разбор EPUB</text>
+<rect x="919" y="962" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="986" font-size="16" font-weight="700" fill="#6e52a3">T13</text>
+<text x="1052" y="986" font-size="16" font-weight="400" fill="#526477">B1</text>
+<text x="931" y="1013" font-size="19" font-weight="400" fill="#203448">Сохранение импорта</text>
+<rect x="919" y="1062" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="931" y="1086" font-size="16" font-weight="700" fill="#6e52a3">T14</text>
+<text x="1052" y="1086" font-size="16" font-weight="400" fill="#526477">F1</text>
+<text x="931" y="1113" font-size="19" font-weight="400" fill="#203448">Загрузка EPUB в</text>
+<text x="931" y="1137" font-size="19" font-weight="400" fill="#203448">интерфейсе</text>
+<rect x="1202" y="108" width="275" height="1078" rx="10" fill="#fdf0e9" stroke="none"/>
+<text x="1217" y="143" font-size="23" font-weight="700" fill="#a95e32">Testing</text>
+<text x="1441" y="143" font-size="21" font-weight="700" fill="#a95e32">0</text>
+<text x="1225" y="196" font-size="19" font-weight="400" fill="#687b8e">Задач пока нет</text>
+<rect x="1495" y="108" width="275" height="1078" rx="10" fill="#eaf5ee" stroke="none"/>
+<text x="1510" y="143" font-size="23" font-weight="700" fill="#327451">Done</text>
+<text x="1734" y="143" font-size="21" font-weight="700" fill="#327451">4</text>
+<rect x="1505" y="162" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="1517" y="186" font-size="16" font-weight="700" fill="#327451">T01</text>
+<text x="1638" y="186" font-size="16" font-weight="400" fill="#526477">A1</text>
+<text x="1517" y="213" font-size="19" font-weight="400" fill="#203448">Назначение, роли и</text>
+<text x="1517" y="237" font-size="19" font-weight="400" fill="#203448">данные</text>
+<rect x="1505" y="262" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="1517" y="286" font-size="16" font-weight="700" fill="#327451">T02</text>
+<text x="1638" y="286" font-size="16" font-weight="400" fill="#526477">A1</text>
+<text x="1517" y="313" font-size="19" font-weight="400" fill="#203448">Требования к системе</text>
+<rect x="1505" y="362" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="1517" y="386" font-size="16" font-weight="700" fill="#327451">T03</text>
+<text x="1638" y="386" font-size="16" font-weight="400" fill="#526477">A1</text>
+<text x="1517" y="413" font-size="19" font-weight="400" fill="#203448">Выбор архитектуры</text>
+<rect x="1505" y="462" width="255" height="90" rx="7" fill="#ffffff" stroke="#d7e0e8"/>
+<text x="1517" y="486" font-size="16" font-weight="700" fill="#327451">T04</text>
+<text x="1638" y="486" font-size="16" font-weight="400" fill="#526477">A1</text>
+<text x="1517" y="513" font-size="19" font-weight="400" fill="#203448">ТЗ и программа</text>
+<text x="1517" y="537" font-size="19" font-weight="400" fill="#203448">приёмки</text>
+<text x="30" y="1220" font-size="18" font-weight="400" fill="#526477">Code Review: существующая реализация ожидает проверки по ТЗ. Done: завершены проектные работы.</text>
+</g></svg>
