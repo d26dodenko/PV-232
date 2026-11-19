@@ -1,0 +1,1307 @@
+{
+  "info": {
+    "name": "LabAPI_Pismennyi",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Функциональные проверки Restful-Booker. Порядок выполнения: Health, Auth, Booking. Используется одна бронь, созданная в текущем прогоне."
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "TC-01 Доступность сервиса",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/ping",
+            "description": "Цель — Доступность сервиса.\n\nВходные данные — без параметров.\n\nОжидаемый результат — HTTP 201. Сервис вернул подтверждение доступности."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.unset(\"bookingId\");",
+                  "pm.environment.unset(\"token\");",
+                  "pm.variables.set(\"runMarker\", \"Lab-\" + pm.variables.replaceIn(\"{{$guid}}\"));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => { pm.response.to.have.status(201); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Ответ содержит подтверждение\", () => { pm.expect(pm.response.text().trim()).not.to.equal(\"\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "TC-02 Вход с учебными данными",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth",
+            "description": "Цель — Вход с учебными данными.\n\nВходные данные — демонстрационная учётная запись из задания.\n\nОжидаемый результат — HTTP 200. Получен непустой токен для операций записи.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"В ответе есть токен\", () => { pm.expect(labReply.token).to.be.a(\"string\").and.not.empty; });",
+                  "pm.test(\"Ответ в JSON\", () => { pm.expect(pm.response.headers.get(\"Content-Type\")).to.match(/application\\/json/i); });",
+                  "if (pm.response.code === 200 && labReply.token) pm.environment.set(\"token\", labReply.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-03 Отказ при неверном пароле",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth",
+            "description": "Цель — Отказ при неверном пароле.\n\nВходные данные — учебный логин, неверный пароль.\n\nОжидаемый результат — HTTP 401. Токен не выдан, сервер сообщил об отказе.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"invalid-lab-password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 401\", () => { pm.response.to.have.status(401); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Токен не выдан\", () => { pm.expect(labReply).not.to.have.property(\"token\"); });",
+                  "pm.test(\"Есть сообщение об ошибке\", () => { pm.expect(pm.response.text().trim()).not.to.equal(\"\"); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "TC-04 Создание брони",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking",
+            "description": "Цель — Создание брони.\n\nВходные данные — Robin, уникальная фамилия прогона, цена 125, 10–14 апреля 2027.\n\nОжидаемый результат — HTTP 200. Получен новый ID, все поля совпали с отправленными.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 125,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.variables.get(\"runMarker\") || !pm.environment.get(\"token\")) pm.execution.skipRequest();"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Получен числовой ID\", () => { pm.expect(Number.isSafeInteger(labReply.bookingid) && labReply.bookingid > 0).to.equal(true); });",
+                  "pm.test(\"Поля новой брони\", () => { pm.expect(labReply.booking).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":125,\\\"depositpaid\\\":false,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Breakfast\\\"}\"))); });",
+                  "if (pm.response.code === 200 && Number.isSafeInteger(labReply.bookingid) && labReply.bookingid > 0 && labReply.booking && labReply.booking.lastname === pm.variables.get(\"runMarker\")) {",
+                  "  pm.environment.set(\"bookingId\", String(labReply.bookingid));",
+                  "  pm.variables.set(\"createdHere\", String(labReply.bookingid));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-05 Поиск по фамилии",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking?lastname={{runMarker}}",
+            "description": "Цель — Поиск по фамилии.\n\nВходные данные — фамилия созданной брони.\n\nОжидаемый результат — HTTP 200. Список содержит ID брони этого прогона."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Список содержит созданную бронь\", () => { pm.expect(labReply.map(x => x.bookingid)).to.include(Number(pm.variables.get(\"createdHere\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-06 Чтение созданной брони",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Чтение созданной брони.\n\nВходные данные — ID из TC-04.\n\nОжидаемый результат — HTTP 200. Прочитанные поля совпадают с ожидаемой бронью."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Совпадают все поля\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":125,\\\"depositpaid\\\":false,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Breakfast\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-07 Полное обновление",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Полное обновление.\n\nВходные данные — цена 180, предоплата внесена, дополнение Breakfast and tea.\n\nОжидаемый результат — HTTP 200. Сервер вернул полную обновлённую бронь.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 180,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast and tea\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Возвращены обновлённые поля\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":180,\\\"depositpaid\\\":true,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Breakfast and tea\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-08 Чтение после PUT",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Чтение после PUT.\n\nВходные данные — ID из TC-04.\n\nОжидаемый результат — HTTP 200. Прочитанные поля совпадают с ожидаемой бронью."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Совпадают все поля\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":180,\\\"depositpaid\\\":true,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Breakfast and tea\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-09 Частичное обновление",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Частичное обновление.\n\nВходные данные — только additionalneeds = Late arrival.\n\nОжидаемый результат — HTTP 200. Изменено одно поле, остальные сохранены.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"additionalneeds\": \"Late arrival\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Остальные поля сохранены\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":180,\\\"depositpaid\\\":true,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Late arrival\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-10 Чтение после PATCH",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Чтение после PATCH.\n\nВходные данные — ID из TC-04.\n\nОжидаемый результат — HTTP 200. Прочитанные поля совпадают с ожидаемой бронью."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Совпадают все поля\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":180,\\\"depositpaid\\\":true,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Late arrival\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-11 Изменение без токена",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Изменение без токена.\n\nВходные данные — без cookie, собственная бронь.\n\nОжидаемый результат — HTTP 403. Изменение отклонено.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"additionalneeds\": \"Unconfirmed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 403\", () => { pm.response.to.have.status(403); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-12 Изменение с неверным токеном",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token=invalid-lab-token"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Изменение с неверным токеном.\n\nВходные данные — cookie с недействительным токеном, собственная бронь.\n\nОжидаемый результат — HTTP 403. Изменение отклонено.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"additionalneeds\": \"Unconfirmed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 403\", () => { pm.response.to.have.status(403); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-13 Сохранность данных после отказа",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Сохранность данных после отказа.\n\nВходные данные — ID из TC-04.\n\nОжидаемый результат — HTTP 200. Прочитанные поля совпадают с ожидаемой бронью."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Совпадают все поля\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":180,\\\"depositpaid\\\":true,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Late arrival\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-14 Ошибочный JSON",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Ошибочный JSON.\n\nВходные данные — незавершённый объект JSON.\n\nОжидаемый результат — HTTP 400. Сервер отклонил некорректный документ.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"firstname\":",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => { pm.response.to.have.status(400); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-15 Пропущено обязательное имя",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Пропущено обязательное имя.\n\nВходные данные — полный набор без firstname.\n\nОжидаемый результат — HTTP 400. Сервер указал на ошибку клиента.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 125,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => { pm.response.to.have.status(400); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-16 Цена строкой",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Цена строкой.\n\nВходные данные — totalprice = «tea».\n\nОжидаемый результат — HTTP 400. Недопустимые данные отклонены.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": \"tea\",\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => { pm.response.to.have.status(400); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-17 Пустое имя",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Пустое имя.\n\nВходные данные — firstname — пустая строка.\n\nОжидаемый результат — HTTP 400. Недопустимые данные отклонены.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 125,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => { pm.response.to.have.status(400); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-18 Длинное имя",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Длинное имя.\n\nВходные данные — имя из 1001 буквы A.\n\nОжидаемый результат — HTTP 200. Сохранены все переданные значения.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 125,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"В ответе те же значения\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":125,\\\"depositpaid\\\":false,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Breakfast\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-19 Нулевая цена",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Нулевая цена.\n\nВходные данные — totalprice = 0.\n\nОжидаемый результат — HTTP 200. Сохранены все переданные значения.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 0,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"В ответе те же значения\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":0,\\\"depositpaid\\\":false,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Breakfast\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-20 Отрицательная цена",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Отрицательная цена.\n\nВходные данные — totalprice = −1.\n\nОжидаемый результат — HTTP 400. Недопустимые данные отклонены.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": -1,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => { pm.response.to.have.status(400); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-21 Большая цена",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Большая цена.\n\nВходные данные — totalprice = 1000000000.\n\nОжидаемый результат — HTTP 200. Сохранены все переданные значения.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 1000000000,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let labReply = {};",
+                  "try { labReply = pm.response.json(); } catch (_) {}",
+                  "pm.test(\"HTTP 200\", () => { pm.response.to.have.status(200); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"В ответе те же значения\", () => { pm.expect(labReply).to.deep.equal(JSON.parse(pm.variables.replaceIn(\"{\\\"firstname\\\":\\\"Robin\\\",\\\"lastname\\\":\\\"{{runMarker}}\\\",\\\"totalprice\\\":1000000000,\\\"depositpaid\\\":false,\\\"bookingdates\\\":{\\\"checkin\\\":\\\"2027-04-10\\\",\\\"checkout\\\":\\\"2027-04-14\\\"},\\\"additionalneeds\\\":\\\"Breakfast\\\"}\"))); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-22 Выезд до заезда",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Выезд до заезда.\n\nВходные данные — заезд 10 апреля, выезд 9 апреля 2027.\n\nОжидаемый результат — HTTP 400. Недопустимые данные отклонены.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 125,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2027-04-10\",\n    \"checkout\": \"2027-04-09\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => { pm.response.to.have.status(400); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-23 Неверный формат даты",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Неверный формат даты.\n\nВходные данные — checkin = «april», checkout = 2027-04-14.\n\nОжидаемый результат — HTTP 400. Недопустимые данные отклонены.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Robin\",\n  \"lastname\": \"{{runMarker}}\",\n  \"totalprice\": 125,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"april\",\n    \"checkout\": \"2027-04-14\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => { pm.response.to.have.status(400); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Сервер не подтвердил запись\", () => { pm.expect(pm.response.code).to.be.within(400,499); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-24 Удаление своей брони",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Удаление своей брони.\n\nВходные данные — ID из TC-04 и действительный токен.\n\nОжидаемый результат — HTTP 201. Сервер подтвердил удаление."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => { pm.response.to.have.status(201); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Есть подтверждение удаления\", () => { pm.expect(pm.response.text().trim()).not.to.equal(\"\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-25 Чтение удалённой брони",
+          "protocolProfileBehavior": {
+            "disableCookies": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/booking/{{bookingId}}",
+            "description": "Цель — Чтение удалённой брони.\n\nВходные данные — ID записи после удаления.\n\nОжидаемый результат — HTTP 404. Ресурс отсутствует."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const owned = pm.variables.get(\"createdHere\");",
+                  "if (!owned || String(pm.environment.get(\"bookingId\")) !== owned) { pm.execution.skipRequest(); }"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 404\", () => { pm.response.to.have.status(404); });",
+                  "pm.test(\"Ответ получен за 5 секунд\", () => { pm.expect(pm.response.responseTime).to.be.below(5000); });",
+                  "pm.test(\"Ответ не содержит брони\", () => { pm.expect(pm.response.text()).not.to.contain(pm.variables.get(\"runMarker\")); });",
+                  "if (pm.response.code === 404) pm.environment.unset(\"bookingId\");",
+                  "pm.environment.unset(\"token\");"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
