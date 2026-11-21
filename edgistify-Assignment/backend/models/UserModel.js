@@ -1,15 +1,21 @@
-const mongoose = require("mongoose");
+const { db } = require("../config/db");
 
-const userSchema = new mongoose.Schema(
-  {
-    fullName: { type: String, required: true, trim: true },
-    email: { type: String, required: true, unique: true, trim: true },
-    password: { type: String, required: true },
-  },
-  { timestamps: true }
-);
+const findByEmail = (email) =>
+  db.prepare("SELECT * FROM users WHERE email = ?").get(email);
 
-const UserModel = mongoose.model('user', userSchema);
+const findById = (id) =>
+  db
+    .prepare(
+      "SELECT id, fullName, email, createdAt, updatedAt FROM users WHERE id = ?"
+    )
+    .get(id);
 
-// Export the model directly
-module.exports = UserModel;
+const create = ({ fullName, email, password }) => {
+  const result = db
+    .prepare("INSERT INTO users (fullName, email, password) VALUES (?, ?, ?)")
+    .run(fullName, email, password);
+
+  return findById(result.lastInsertRowid);
+};
+
+module.exports = { findByEmail, findById, create };

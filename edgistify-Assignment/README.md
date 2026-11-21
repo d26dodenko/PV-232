@@ -3,8 +3,8 @@
 ## Overview
 This is a full-stack e-commerce platform that allows users to register, log in, add products to their cart, and place orders. The application consists of:
 - A **frontend** built with React and TypeScript.
-- A **backend** built with Node.js, Express, and MongoDB.
-- JWT-based authentication and bcrypt for password hashing.
+- A **backend** built with Node.js, Express, and SQLite.
+- JWT-based authentication and bcryptjs for password hashing.
 
 ## Features
 ### **User Authentication**
@@ -47,7 +47,8 @@ cd frontend
 ```sh
 cd backend
 npm install
-nodemon index.js
+npm run seed
+npm start
 ```
 
 ### Frontend Setup
@@ -57,13 +58,16 @@ npm install
 npm run dev
 ```
 
+The frontend API base URL defaults to `http://localhost:3000/api`. To use a
+different backend, create `frontend/.env` with `VITE_API_URL=<api-base-url>`.
+
 
 ## Project Structure
 ### **Backend (`backend/` directory)**
 ```
 backend/
 ├── config/
-│   ├── db.js  # MongoDB connection setup
+│   ├── db.js  # SQLite connection and schema setup
 │
 ├── controllers/
 │   ├── CartController.js
@@ -86,6 +90,8 @@ backend/
 │   ├── ProductRoutes.js
 │   ├── UserRoutes.js
 │
+├── data/  # SQLite database files (gitignored)
+├── seed.js  # Sample product seed script
 ├── .env  # Environment variables
 ├── index.js  # Main server file
 ```
@@ -117,15 +123,25 @@ frontend/src/
 
 ## Installation
 ### **Prerequisites**
-- Node.js & npm
-- MongoDB
+- Node.js 22+ & npm
 
 ### **Backend Setup**
 ```bash
 cd backend
 npm install
-npm start  # Runs the backend server
+npm run seed  # Inserts sample products (optional)
+npm start     # Runs the backend server
 ```
+
+Create `backend/.env` before starting the server:
+
+```env
+JWT_SECRET=replace-with-a-long-random-string
+PORT=3000
+# DB_PATH=/absolute/path/to/shop.db  # optional
+```
+
+The SQLite database is created automatically at `backend/data/shop.db`.
 
 ### **Frontend Setup**
 ```bash
@@ -139,18 +155,23 @@ npm run dev  # Runs the frontend development server
 - `POST /api/users/register` - Register a new user
 - `POST /api/users/login` - User login
 
+### **Product Management**
+- `GET /api/products` - List products
+- `GET /api/products/:id` - Get one product
+
 ### **Cart Management**
 - `POST /api/cart/add` - Add product to cart (authentication required)
 - `GET /api/cart/` - Get user's cart items
-- `DELETE /api/cart/:id` - Remove item from cart
+- `PUT /api/cart/update/:id` - Update cart item quantity
+- `DELETE /api/cart/remove/:id` - Remove item from cart
 
 ### **Order Management**
-- `POST /api/orders/place` - Place an order
-- `GET /api/orders/` - Get user's order history
+- `POST /api/orders/create` - Place an order
+- `GET /api/orders/get` - Get user's order history
 
 ## Technologies Used
 - **Frontend:** React, TypeScript, Axios
-- **Backend:** Node.js, Express, MongoDB, Mongoose
+- **Backend:** Node.js, Express, SQLite, better-sqlite3
 - **Authentication:** JWT, bcrypt.js
 - **Styling:** CSS, Tailwind (if used)
 

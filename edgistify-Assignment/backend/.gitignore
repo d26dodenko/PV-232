@@ -3,3 +3,12 @@
 
 # Node modules
 node_modules/
+
+# SQLite database
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Coverage reports
+coverage/

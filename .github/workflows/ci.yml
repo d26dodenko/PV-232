@@ -1,0 +1,152 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22"
+  BACKEND_DIR: edgistify-Assignment/backend
+  FRONTEND_DIR: edgistify-Assignment/frontend
+
+jobs:
+  unit:
+    name: Unit tests + lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            edgistify-Assignment/backend/package-lock.json
+            edgistify-Assignment/frontend/package-lock.json
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: ${{ env.BACKEND_DIR }}
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: ${{ env.FRONTEND_DIR }}
+      - name: Lint frontend
+        run: npm run lint
+        working-directory: ${{ env.FRONTEND_DIR }}
+      - name: Typecheck and build frontend
+        run: npm run build
+        working-directory: ${{ env.FRONTEND_DIR }}
+      - name: Run backend unit tests
+        run: npm run test:unit
+        working-directory: ${{ env.BACKEND_DIR }}
+
+  integration:
+    name: Integration tests + coverage gate
+    needs: unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: edgistify-Assignment/backend/package-lock.json
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: ${{ env.BACKEND_DIR }}
+      - name: Run integration tests with 80% coverage gate
+        run: npm run test:coverage
+        working-directory: ${{ env.BACKEND_DIR }}
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: edgistify-Assignment/backend/coverage
+          if-no-files-found: warn
+
+  security:
+    name: Critical vulnerability gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            edgistify-Assignment/backend/package-lock.json
+            edgistify-Assignment/frontend/package-lock.json
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: ${{ env.BACKEND_DIR }}
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: ${{ env.FRONTEND_DIR }}
+      - name: Audit backend dependencies
+        run: npm audit --audit-level=critical
+        working-directory: ${{ env.BACKEND_DIR }}
+      - name: Audit frontend dependencies
+        run: npm audit --audit-level=critical
+        working-directory: ${{ env.FRONTEND_DIR }}
+
+  e2e:
+    name: Playwright E2E
+    needs: [integration, security]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            edgistify-Assignment/backend/package-lock.json
+            edgistify-Assignment/frontend/package-lock.json
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: ${{ env.BACKEND_DIR }}
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: ${{ env.FRONTEND_DIR }}
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+        working-directory: ${{ env.FRONTEND_DIR }}
+      - name: Run E2E tests
+        run: npm run test:e2e
+        working-directory: ${{ env.FRONTEND_DIR }}
+        env:
+          CI: "true"
+      - name: Upload Playwright HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: edgistify-Assignment/frontend/playwright-report
+          if-no-files-found: warn
+      - name: Upload Playwright test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: edgistify-Assignment/frontend/test-results
+          if-no-files-found: warn
+
+  ci:
+    name: CI quality gates
+    if: always()
+    needs: [unit, integration, security, e2e]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check that all required jobs succeeded
+        run: |
+          if [[ "${{ needs.unit.result }}" != "success" || \
+                "${{ needs.integration.result }}" != "success" || \
+                "${{ needs.security.result }}" != "success" || \
+                "${{ needs.e2e.result }}" != "success" ]]; then
+            echo "One or more quality gates failed"
+            exit 1
+          fi
+          echo "All quality gates passed"

@@ -1,10 +1,10 @@
 const CartModel = require("../models/CartModel");
-const ProductModel = require("../models/ProductModel");
+const { toId } = require("../models/helpers");
 
 // get a cart
-const getCart = async (req, res, next) => {
+const getCart = (req, res) => {
   try {
-    const cartItems = await CartModel.find({ userId: req.userId });
+    const cartItems = CartModel.findByUserId(req.userId);
     res.json(cartItems);
   } catch (error) {
     res.status(500).json({ message: "Error", error });
@@ -12,34 +12,45 @@ const getCart = async (req, res, next) => {
 };
 
 // add a cart
-const addCart = async (req, res, next) => {
+const addCart = (req, res) => {
   try {
-    const { userId, images, title, price, quantity, size, productId } = req.body;
-    const cartItem = new CartModel({
-      userId,
+    const { images, img1, title, price, quantity, size, productId } = req.body;
+
+    if (!toId(productId) || !title || price === undefined || !size) {
+      return res
+        .status(400)
+        .json({ message: "productId, title, price and size are required" });
+    }
+
+    const cartItem = CartModel.create({
+      userId: req.userId,
+      productId,
       images,
+      img1,
       title,
       price,
       quantity,
       size,
-      productId,
     });
-    await cartItem.save();
+
     res.status(201).json({ message: "Added to cart Sucsessfully", cartItem });
   } catch (error) {
     res.status(500).json({ message: "Error", error });
   }
 };
 
-// uodate a cart
-const updateCart = async (req, res, next) => {
+// update a cart
+const updateCart = (req, res) => {
   try {
-    const { quantity } = req.body;
-    const cartItem = await CartModel.findByIdAndUpdate(
-      req.params.id,
-      { quantity },
-      { new: true }
-    );
+    const quantity = Number(req.body.quantity);
+
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      return res
+        .status(400)
+        .json({ message: "quantity must be a positive integer" });
+    }
+
+    const cartItem = CartModel.updateQuantity(req.params.id, quantity);
 
     if (!cartItem) {
       return res.status(404).json({ message: "Cart is not found" });
@@ -51,13 +62,12 @@ const updateCart = async (req, res, next) => {
   }
 };
 
-
 // delete a cart
-const removeCart = async (req, res) => {
+const removeCart = (req, res) => {
   try {
-    const cartItem = await CartModel.findByIdAndDelete(req.params.id);
+    const removed = CartModel.remove(req.params.id);
 
-    if (!cartItem) {
+    if (!removed) {
       return res.status(404).json({ message: "Cart is not found" });
     }
 

@@ -1,38 +1,43 @@
 const OrderModel = require("../models/OrderModel");
+const { normalizeImages } = require("../models/helpers");
 
-const createOrder = async (req, res) => {
+const createOrder = (req, res) => {
   try {
     const { products, totalPrice, shippingAddress } = req.body;
-    const userId = req.userId;
 
-    if (!products || products.length === 0) {
+    if (!Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ message: "must contain products" });
     }
 
-    const order = new OrderModel({
-      userId,
-      products,
+    const normalizedProducts = products.map((product) => ({
+      productId: product.productId ?? product._id ?? null,
+      title: product.title,
+      images: normalizeImages(product.images, product.img1),
+      quantity: product.quantity,
+      price: product.price,
+    }));
+
+    const order = OrderModel.create({
+      userId: req.userId,
+      products: normalizedProducts,
       totalPrice,
       shippingAddress,
-      paymentStatus: "Pending",
-      orderStatus: "Pending",
     });
 
-    await order.save();
     res.status(201).json({ message: "Order added successfully", order });
   } catch (error) {
     res.status(500).json({ message: "Error", error });
   }
 };
 
- // Fetch all orders 
-const getOrders = async (req, res) => {
+// Fetch all orders
+const getOrders = (req, res) => {
   try {
-    const orders = await OrderModel.find({ userId: req.userId });
+    const orders = OrderModel.findByUserId(req.userId);
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: "Error", error });
   }
 };
 
-module.exports = {createOrder, getOrders}
+module.exports = { createOrder, getOrders };

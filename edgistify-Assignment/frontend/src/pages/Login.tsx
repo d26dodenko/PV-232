@@ -23,10 +23,11 @@ const Login = () => {
 
       toast.success(message);
       setTimeout(() => navigate("/"), 2000);
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.message || "An unexpected error occurred"
-      );
+    } catch (error) {
+      const message = (
+        error as { response?: { data?: { message?: string } } }
+      ).response?.data?.message;
+      toast.error(message || "An unexpected error occurred");
     }
   };
 

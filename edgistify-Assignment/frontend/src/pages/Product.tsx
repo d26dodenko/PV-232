@@ -26,7 +26,7 @@ function Products() {
       try {
         const response = await getProducts();
         setProducts(response.data);
-      } catch (error) {
+      } catch {
         toast.error("Failed to fetch products");
       } finally {
         setLoading(false);
