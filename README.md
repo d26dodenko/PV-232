@@ -1,7 +1,3 @@
-# PV-232
-
-[![CI](https://github.com/d26dodenko/PV-232/actions/workflows/ci.yml/badge.svg?branch=zubarev_maxim%2Ftesting%2Flab-3)](https://github.com/d26dodenko/PV-232/actions/workflows/ci.yml)
-
 # Отчёт по лабораторной работе № 3
 
 ## «Автоматизация UI-тестов и построение CI/CD-пайплайна с блокирующими quality gates»
