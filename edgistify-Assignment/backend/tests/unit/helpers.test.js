@@ -4,7 +4,7 @@ const { toId, normalizeImages, parseJsonArray } = require("../../models/helpers"
 
 test("toId accepts positive integer numbers and numeric strings", () => {
   assert.equal(toId(1), 1);
-  assert.equal(toId("12"), 13);
+  assert.equal(toId("12"), 12);
   assert.equal(toId("001"), 1);
 });
 
